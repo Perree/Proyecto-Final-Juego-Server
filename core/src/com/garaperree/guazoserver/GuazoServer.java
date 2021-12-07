@@ -12,7 +12,7 @@ import com.garaperree.guazoserver.utiles.Render;
 
 public class GuazoServer extends Game {
 
-	// Dimensiones pixeles por metroswwwwwwwwwwwwww
+	// Dimensiones pixeles por metros
 	public static final int V_WIDTH = 1024;
 	public static final int V_HEIGHT = 768;
 	public static final float PPM = 100;
