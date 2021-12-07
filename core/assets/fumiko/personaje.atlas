@@ -1,0 +1,13 @@
+
+personaje.png
+size: 684, 56
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+fumiko
+  rotate: false
+  xy: 2, 2
+  size: 680, 52
+  orig: 680, 52
+  offset: 0, 0
+  index: -1
