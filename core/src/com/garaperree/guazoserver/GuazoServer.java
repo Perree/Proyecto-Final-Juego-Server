@@ -50,7 +50,7 @@ public class GuazoServer extends Game {
 //		espera.setPosition((Config.ANCHO/2)-(espera.getAncho()/2), (Config.ALTO/2)+(espera.getAlto()/2));
 		
 		//Hilo Servidor
-		hs = new HiloServidor();
+		hs = new HiloServidor(this);
 		hs.start();
 		
 		manager = new AssetManager();

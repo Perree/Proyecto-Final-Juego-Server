@@ -6,6 +6,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 
+import com.garaperree.guazoserver.GuazoServer;
 import com.garaperree.guazoserver.utiles.Global;
 
 public class HiloServidor extends Thread{
@@ -14,8 +15,11 @@ public class HiloServidor extends Thread{
 	private boolean fin = false;
 	private DireccionRed[] clientes = new DireccionRed[2];
 	private int cantClientes = 0;
+	private GuazoServer app;
 	
-	public HiloServidor() {
+	public HiloServidor(GuazoServer app) {
+		this.app = app;
+		
 		try {
 			conexion = new DatagramSocket(8080);
 		} catch (SocketException e) {
@@ -40,20 +44,35 @@ public class HiloServidor extends Thread{
 	private void procesarMensaje(DatagramPacket dp) { 
 		String msg = (new String(dp.getData())).trim(); 
 		System.out.println("Mensaje = "+ msg);
+		int nroCliente = -1;
 		
-		if(msg.equals("Conexion")) {
-			System.out.println("Llega msg conexion cliente " + cantClientes);
-			if(cantClientes<2) {
-				clientes[cantClientes] = new DireccionRed(dp.getAddress(), dp.getPort());
-				enviarMensaje("Ok", clientes[cantClientes].getIp(), clientes[cantClientes++].getPuerto());
-				if(cantClientes==2) {
-					Global.empieza = true;
-					for(int i = 0; i < clientes.length; i++) {
-						enviarMensaje("Empieza", clientes[i].getIp(), clientes[i].getPuerto());
-					}
+		if(cantClientes>1) {
+			for (int i = 0; i < clientes.length; i++) {
+				if(dp.getPort()==clientes[i].getPuerto() && dp.getAddress().equals(clientes[i].getIp())) {
+					nroCliente=i;
 				}
-			} 
-		}		
+			}
+		}
+		
+		if(cantClientes<2) {
+			if(msg.equals("Conexion")) {
+				System.out.println("Llega msg conexion cliente " + cantClientes);
+				if(cantClientes<2) {
+					clientes[cantClientes] = new DireccionRed(dp.getAddress(), dp.getPort());
+					enviarMensaje("Ok", clientes[cantClientes].getIp(), clientes[cantClientes++].getPuerto());
+					if(cantClientes==2) {
+						Global.empieza = true;
+						for(int i = 0; i < clientes.length; i++) {
+							enviarMensaje("Empieza", clientes[i].getIp(), clientes[i].getPuerto());
+						}
+					}
+				} 
+			}
+		} else {
+			if(nroCliente!=-1) {
+				
+			}
+		}
 	}
 	
 	public void enviarMensaje(String msg, InetAddress ip, int puerto) {
