@@ -39,7 +39,7 @@ public class GuazoServer extends Game {
 	
 	private HiloServidor hs;
 	
-	private Texto espera;
+//	private Texto espera;
 	
 	@Override
 	public void create () {
@@ -49,15 +49,17 @@ public class GuazoServer extends Game {
 //		espera.setTexto("Esperando jugadores...");
 //		espera.setPosition((Config.ANCHO/2)-(espera.getAncho()/2), (Config.ALTO/2)+(espera.getAlto()/2));
 		
+		//Hilo Servidor
+		hs = new HiloServidor();
+		hs.start();
+		
 		manager = new AssetManager();
 		manager.load("audio/music/MatWyre_Deep_Dawn.mp3", Music.class);
 //		manager.load("audio/sfx/muere.wav", Sound.class);
 //		manager.load("audio/sfx/next_level.wav", Sound.class);
 		manager.finishLoading();
 		
-		//Hilo Servidor
-		hs = new HiloServidor();
-		hs.start();
+		
 		
 		
 //		this.setScreen(new PantallaCarga());

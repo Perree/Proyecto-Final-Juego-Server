@@ -42,9 +42,10 @@ public class HiloServidor extends Thread{
 		System.out.println("Mensaje = "+ msg);
 		
 		if(msg.equals("Conexion")) {
+			System.out.println("Llega msg conexion cliente " + cantClientes);
 			if(cantClientes<2) {
 				clientes[cantClientes] = new DireccionRed(dp.getAddress(), dp.getPort());
-				enviarMensaje("Ok "+(cantClientes+1), clientes[cantClientes].getIp(), clientes[cantClientes++].getPuerto());
+				enviarMensaje("Ok", clientes[cantClientes].getIp(), clientes[cantClientes++].getPuerto());
 				if(cantClientes==2) {
 					Global.empieza = true;
 					for(int i = 0; i < clientes.length; i++) {
@@ -58,7 +59,7 @@ public class HiloServidor extends Thread{
 	public void enviarMensaje(String msg, InetAddress ip, int puerto) {
 		byte[] data = msg.getBytes();
 		try {
-			DatagramPacket dp = new DatagramPacket(data, data.length, puerto);
+			DatagramPacket dp = new DatagramPacket(data, data.length, ip, puerto);
 			conexion.send(dp);
 		} catch (IOException e) {
 			e.printStackTrace();
