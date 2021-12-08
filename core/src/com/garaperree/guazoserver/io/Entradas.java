@@ -1,7 +1,8 @@
-package com.garaperree.guazoserver.utiles;
+package com.garaperree.guazoserver.io;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
+import com.garaperree.guazoserver.diseños.Config;
 import com.garaperree.guazoserver.pantallas.PantallaMenu;
 
 public class Entradas implements InputProcessor {

@@ -18,13 +18,13 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.garaperree.guazoserver.GuazoServer;
+import com.garaperree.guazoserver.diseños.Recursos;
+import com.garaperree.guazoserver.diseños.Texto;
 import com.garaperree.guazoserver.escenas.Hud;
 import com.garaperree.guazoserver.sprites.Fumiko;
 import com.garaperree.guazoserver.utiles.B2WorldCreator;
 import com.garaperree.guazoserver.utiles.Global;
-import com.garaperree.guazoserver.utiles.Recursos;
 import com.garaperree.guazoserver.utiles.Render;
-import com.garaperree.guazoserver.utiles.Texto;
 import com.garaperree.guazoserver.utiles.WorldContactListener;
 
 public class PantallaJuego implements Screen{

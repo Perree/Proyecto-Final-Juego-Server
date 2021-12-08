@@ -2,8 +2,8 @@ package com.garaperree.guazoserver.pantallas;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.garaperree.guazoserver.utiles.Imagen;
-import com.garaperree.guazoserver.utiles.Recursos;
+import com.garaperree.guazoserver.diseños.Imagen;
+import com.garaperree.guazoserver.diseños.Recursos;
 import com.garaperree.guazoserver.utiles.Render;
 
 public class PantallaCarga implements Screen{
@@ -18,7 +18,7 @@ public class PantallaCarga implements Screen{
 	@Override
 	public void show() {
 		fondo = new Imagen(Recursos.LOGO);
-		b = Render.batch;
+		b = Render.sb;
 		fondo.setTransparencia(0);
 	}
 
@@ -57,7 +57,7 @@ public class PantallaCarga implements Screen{
 		if(termina) {
 			contTiempoTermina += 0.04f;
 			if(contTiempoTermina>tiempoTermina) {
-				Render.app.setScreen(new PantallaMenu());
+				Render.sb.setScreen(new PantallaMenu());
 			}
 		}
 	}

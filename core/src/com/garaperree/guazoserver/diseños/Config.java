@@ -1,4 +1,4 @@
-package com.garaperree.guazoserver.utiles;
+package com.garaperree.guazoserver.diseños;
 
 public class Config {
 

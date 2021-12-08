@@ -1,4 +1,4 @@
-package com.garaperree.guazoserver.utiles;
+package com.garaperree.guazoserver.diseños;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.math.Vector2;
+import com.garaperree.guazoserver.utiles.Render;
 
 public class Texto {
 	BitmapFont fuente;

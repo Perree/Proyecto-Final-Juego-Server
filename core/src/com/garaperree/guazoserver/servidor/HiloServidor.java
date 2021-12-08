@@ -17,22 +17,10 @@ public class HiloServidor extends Thread{
 	
 	public HiloServidor() {
 		try {
-			conexion = new DatagramSocket(8080);
+			conexion = new DatagramSocket(9998);
 		} catch (SocketException e) {
 			e.printStackTrace();
 		} 
-	}
-	
-	public void enviarMensaje(String msg, InetAddress ip, int puerto) {
-		byte[] data = msg.getBytes();
-		InetAddress ipDestino;
-		try {
-			ipDestino = InetAddress.getByName("192.168.1.50");
-			DatagramPacket dp = new DatagramPacket(data, data.length, puerto);
-			conexion.send(dp);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	@Override
@@ -42,29 +30,44 @@ public class HiloServidor extends Thread{
 			DatagramPacket dp = new DatagramPacket(data, data.length);
 			try {
 				conexion.receive(dp);
+				procesarMensaje(dp);
 			} catch (IOException e) {
 				e.printStackTrace();
-			}
-			procesarMensaje(dp);
+			}	
 		} while(!fin);
 	}
-
+	
 	private void procesarMensaje(DatagramPacket dp) {
 		String msg = (new String(dp.getData())).trim(); 
 		System.out.println("Mensaje = "+ msg);
+		
 		if(msg.equals("Conexion")) {
-			System.out.println("Llega mensaje conexion cliente "+ cantClientes);
 			if(cantClientes<2) {
-				clientes[cantClientes] = new DireccionRed(dp.getAddress(), dp.getPort());
-				enviarMensaje("Ok", clientes[cantClientes].getIp(), clientes[cantClientes++].getPuerto());
-			} 
-			if(cantClientes==2) {
-				Global.empieza = true;
-				for(int i = 0; i < clientes.length; i++) {
-					enviarMensaje("Empieza", clientes[i].getIp(), clientes[i].getPuerto());
+				this.clientes[cantClientes] = new DireccionRed(dp.getAddress(), dp.getPort());
+				enviarMensaje("Ok"+(cantClientes+1), dp.getAddress(), dp.getPort());
+				cantClientes++;
+				if(cantClientes==2) {
+					Global.empieza = true;
+					for(int i = 0; i < clientes.length; i++) {
+						enviarMensaje("Empieza", clientes[i].getIp(), clientes[i].getPuerto());
+					}
 				}
-			}
+			} 
 		}		
 	}
+	
+	public void enviarMensaje(String msg, InetAddress ip, int puerto) {
+		byte[] data = msg.getBytes();
+		InetAddress ipDestino;
+		try {
+			ipDestino = InetAddress.getByName("192.168.0.47");
+			DatagramPacket dp = new DatagramPacket(data, data.length, puerto);
+			conexion.send(dp);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	
 	
 }
