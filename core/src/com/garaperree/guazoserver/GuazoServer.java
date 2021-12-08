@@ -3,12 +3,15 @@ package com.garaperree.guazoserver;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.garaperree.guazoserver.pantallas.PantallaJuego;
 import com.garaperree.guazoserver.servidor.HiloServidor;
+import com.garaperree.guazoserver.utiles.Config;
 import com.garaperree.guazoserver.utiles.Global;
+import com.garaperree.guazoserver.utiles.Recursos;
 import com.garaperree.guazoserver.utiles.Render;
+import com.garaperree.guazoserver.utiles.Texto;
 
 public class GuazoServer extends Game {
 
@@ -36,9 +39,16 @@ public class GuazoServer extends Game {
 	
 	private HiloServidor hs;
 	
+	private Texto espera;
+	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
+		
+		espera = new Texto(Recursos.FUENTE, 100, Color.WHITE, false);
+		espera.setTexto("Esperando jugadores...");
+		espera.setPosition((Config.ANCHO/2)-(espera.getAncho()/2), (Config.ALTO/2)+(espera.getAlto()/2));
+		
 		manager = new AssetManager();
 		manager.load("audio/music/MatWyre_Deep_Dawn.mp3", Music.class);
 //		manager.load("audio/sfx/muere.wav", Sound.class);
@@ -58,7 +68,9 @@ public class GuazoServer extends Game {
 	public void render () {
 		Render.limpiarPantalla();
 		if(Global.empieza) {
-			System.out.println("Esperando jugador...");
+			Render.begin();
+			espera.dibujar();
+			Render.end();
 		}else {
 			// delegar el metodo de render para la pantalla del juego
 			super.render(); 

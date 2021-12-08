@@ -35,7 +35,7 @@ public class Texto {
 	}
 
 	public void dibujar() {
-		fuente.draw(Render.batch, texto, x, y);
+		fuente.draw(Render.sb, texto, x, y);
 	}
 	
 	public void setColor(Color color) {

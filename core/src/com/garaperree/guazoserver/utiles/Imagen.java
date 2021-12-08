@@ -13,7 +13,7 @@ public class Imagen {
 	}
 	
 	public void dibujar(){
-	spr.draw(Render.batch);
+	spr.draw(Render.sb);
 	}
 	
 	public void setTransparencia(float a) {
