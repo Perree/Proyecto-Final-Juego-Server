@@ -17,7 +17,7 @@ public class HiloServidor extends Thread{
 	
 	public HiloServidor() {
 		try {
-			conexion = new DatagramSocket(9998);
+			conexion = new DatagramSocket(8080);
 		} catch (SocketException e) {
 			e.printStackTrace();
 		} 
@@ -37,15 +37,14 @@ public class HiloServidor extends Thread{
 		} while(!fin);
 	}
 	
-	private void procesarMensaje(DatagramPacket dp) {
+	private void procesarMensaje(DatagramPacket dp) { 
 		String msg = (new String(dp.getData())).trim(); 
 		System.out.println("Mensaje = "+ msg);
 		
 		if(msg.equals("Conexion")) {
 			if(cantClientes<2) {
-				this.clientes[cantClientes] = new DireccionRed(dp.getAddress(), dp.getPort());
-				enviarMensaje("Ok"+(cantClientes+1), dp.getAddress(), dp.getPort());
-				cantClientes++;
+				clientes[cantClientes] = new DireccionRed(dp.getAddress(), dp.getPort());
+				enviarMensaje("Ok "+(cantClientes+1), clientes[cantClientes].getIp(), clientes[cantClientes++].getPuerto());
 				if(cantClientes==2) {
 					Global.empieza = true;
 					for(int i = 0; i < clientes.length; i++) {
@@ -58,9 +57,7 @@ public class HiloServidor extends Thread{
 	
 	public void enviarMensaje(String msg, InetAddress ip, int puerto) {
 		byte[] data = msg.getBytes();
-		InetAddress ipDestino;
 		try {
-			ipDestino = InetAddress.getByName("192.168.0.47");
 			DatagramPacket dp = new DatagramPacket(data, data.length, puerto);
 			conexion.send(dp);
 		} catch (IOException e) {
