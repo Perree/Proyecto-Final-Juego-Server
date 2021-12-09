@@ -72,6 +72,9 @@ public class HiloServidor extends Thread{
 			
 			if(nroCliente!=-1) {
 				if (msg.equals("ApreteArriba")){
+					if(nroCliente==0) {
+						
+					}
 					
 				} else if(msg.equals("ApreteDerecha")) {
 					
