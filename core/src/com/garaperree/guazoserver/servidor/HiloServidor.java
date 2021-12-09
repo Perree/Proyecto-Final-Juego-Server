@@ -67,10 +67,17 @@ public class HiloServidor extends Thread{
 						}
 					}
 				} 
-			}
+			} 
 		} else {
+			
 			if(nroCliente!=-1) {
-				
+				if (msg.equals("ApreteArriba")){
+					
+				} else if(msg.equals("ApreteDerecha")) {
+					
+				} else if(msg.equals("ApreteIzquierda")) {
+					
+				}
 			}
 		}
 	}
