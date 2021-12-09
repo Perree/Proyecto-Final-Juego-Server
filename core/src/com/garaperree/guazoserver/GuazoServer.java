@@ -50,14 +50,14 @@ public class GuazoServer extends Game {
 //		espera.setPosition((Config.ANCHO/2)-(espera.getAncho()/2), (Config.ALTO/2)+(espera.getAlto()/2));
 		
 		//Hilo Servidor
-		hs = new HiloServidor(this);
+		hs = new HiloServidor();
 		hs.start();
 		
-		manager = new AssetManager();
-		manager.load("audio/music/MatWyre_Deep_Dawn.mp3", Music.class);
-//		manager.load("audio/sfx/muere.wav", Sound.class);
-//		manager.load("audio/sfx/next_level.wav", Sound.class);
-		manager.finishLoading();
+//		manager = new AssetManager();
+//		manager.load("audio/music/MatWyre_Deep_Dawn.mp3", Music.class);
+////		manager.load("audio/sfx/muere.wav", Sound.class);
+////		manager.load("audio/sfx/next_level.wav", Sound.class);
+//		manager.finishLoading();
 		
 		
 		
@@ -80,7 +80,7 @@ public class GuazoServer extends Game {
 	@Override
 	public void dispose() {
 		super.dispose();
-		manager.dispose();
+//		manager.dispose();
 		batch.dispose();
 	}
 }

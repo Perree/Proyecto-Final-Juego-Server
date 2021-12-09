@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -18,13 +17,9 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.garaperree.guazoserver.GuazoServer;
-import com.garaperree.guazoserver.diseños.Recursos;
-import com.garaperree.guazoserver.diseños.Texto;
 import com.garaperree.guazoserver.escenas.Hud;
 import com.garaperree.guazoserver.sprites.Fumiko;
 import com.garaperree.guazoserver.utiles.B2WorldCreator;
-import com.garaperree.guazoserver.utiles.Global;
-import com.garaperree.guazoserver.utiles.Render;
 import com.garaperree.guazoserver.utiles.WorldContactListener;
 
 public class PantallaJuego implements Screen{
@@ -50,6 +45,8 @@ public class PantallaJuego implements Screen{
 	private Fumiko jugador1, jugador2;
 	
 	private Music music;
+	
+	public boolean isRight1=false, isUp1=false, isRight2=false, isUp2=false, isLeft1=false, isLeft2=false;
 	
 	public PantallaJuego(GuazoServer game) {
 		
@@ -107,31 +104,47 @@ public class PantallaJuego implements Screen{
 		
 	}
 	
-	//mover la posicion de la camara hacia la derecha
+	// controlar jugador
 	private void handleInput(float dt) {
 		
-		// controlar a nuestro jugador mediante impulsos
-		if(jugador1.currentState != Fumiko.State.DEAD) {
-			if(Gdx.input.isKeyJustPressed(Input.Keys.UP))
-				jugador1.jump();
-			
-			if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) && jugador1.b2body.getLinearVelocity().x <=2)
-				jugador1.b2body.applyLinearImpulse(new Vector2(0.1f, 0),jugador1.b2body.getWorldCenter(), true);
-			
-			if(Gdx.input.isKeyPressed(Input.Keys.LEFT) && jugador1.b2body.getLinearVelocity().x >=-2)
-				jugador1.b2body.applyLinearImpulse(new Vector2(-0.1f, 0),jugador1.b2body.getWorldCenter(), true);
+		if(isUp1) {
+			jugador1.jump();
+		} else if(isUp2) {
+			jugador2.jump();
+		}
+		if(isRight1) {
+			jugador1.b2body.applyLinearImpulse(new Vector2(0.1f, 0),jugador1.b2body.getWorldCenter(), true);
+		} else if(isRight2) {
+			jugador2.b2body.applyLinearImpulse(new Vector2(0.1f, 0),jugador1.b2body.getWorldCenter(), true);
+		}
+		if(isLeft1) {
+			jugador1.b2body.applyLinearImpulse(new Vector2(-0.1f, 0),jugador1.b2body.getWorldCenter(), true);
+		} else if(isLeft2) {
+			jugador2.b2body.applyLinearImpulse(new Vector2(-0.1f, 0),jugador1.b2body.getWorldCenter(), true);
 		}
 		
-		if(jugador2.currentState != Fumiko.State.DEAD) {
-			if(Gdx.input.isKeyJustPressed(Input.Keys.W))
-				jugador2.jump();
-			
-			if(Gdx.input.isKeyPressed(Input.Keys.D) && jugador2.b2body.getLinearVelocity().x <=2)
-				jugador2.b2body.applyLinearImpulse(new Vector2(0.1f, 0),jugador2.b2body.getWorldCenter(), true);
-			
-			if(Gdx.input.isKeyPressed(Input.Keys.A) && jugador2.b2body.getLinearVelocity().x >=-2)
-				jugador2.b2body.applyLinearImpulse(new Vector2(-0.1f, 0),jugador2.b2body.getWorldCenter(), true);
-		}
+		// controlar a nuestro jugador mediante impulsos
+//		if(jugador1.currentState != Fumiko.State.DEAD) {
+//			if(Gdx.input.isKeyJustPressed(Input.Keys.UP))
+//				jugador1.jump();
+//			
+//			if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) && jugador1.b2body.getLinearVelocity().x <=2)
+//				jugador1.b2body.applyLinearImpulse(new Vector2(0.1f, 0),jugador1.b2body.getWorldCenter(), true);
+//			
+//			if(Gdx.input.isKeyPressed(Input.Keys.LEFT) && jugador1.b2body.getLinearVelocity().x >=-2)
+//				jugador1.b2body.applyLinearImpulse(new Vector2(-0.1f, 0),jugador1.b2body.getWorldCenter(), true);
+//		}
+		
+//		if(jugador2.currentState != Fumiko.State.DEAD) {
+//			if(Gdx.input.isKeyJustPressed(Input.Keys.W))
+//				jugador2.jump();
+//			
+//			if(Gdx.input.isKeyPressed(Input.Keys.D) && jugador2.b2body.getLinearVelocity().x <=2)
+//				jugador2.b2body.applyLinearImpulse(new Vector2(0.1f, 0),jugador2.b2body.getWorldCenter(), true);
+//			
+//			if(Gdx.input.isKeyPressed(Input.Keys.A) && jugador2.b2body.getLinearVelocity().x >=-2)
+//				jugador2.b2body.applyLinearImpulse(new Vector2(-0.1f, 0),jugador2.b2body.getWorldCenter(), true);
+//		}
 		
 	}
 	
@@ -151,7 +164,7 @@ public class PantallaJuego implements Screen{
 		//Cuando el personaje se cae en la lava
 		if (jugador1.getY() < 0) {
 			//sonido
-			GuazoServer.manager.get("audio/music/MatWyre_Deep_Dawn.mp3", Music.class).stop();
+//			GuazoServer.manager.get("audio/music/MatWyre_Deep_Dawn.mp3", Music.class).stop();
 //			GuazoServer.manager.get("audio/sfx/muere.wav", Sound.class).play();
 			jugador1.currentState = Fumiko.State.DEAD;
 		}
@@ -159,7 +172,7 @@ public class PantallaJuego implements Screen{
 		// Pinches 1
 		if((jugador1.getX() > 2.42f && jugador1.getY() >= 4.50f) && 
 				(jugador1.getX() <= 2.81f && jugador1.getY() <= 5.15f)) {
-			GuazoServer.manager.get("audio/music/MatWyre_Deep_Dawn.mp3", Music.class).stop();
+//			GuazoServer.manager.get("audio/music/MatWyre_Deep_Dawn.mp3", Music.class).stop();
 //			GuazoServer.manager.get("audio/sfx/muere.wav", Sound.class).play();
 			jugador1.currentState = Fumiko.State.DEAD;
 		}
@@ -167,7 +180,7 @@ public class PantallaJuego implements Screen{
 		// Pinches 2
 		if((jugador1.getX() >= 4.9895763 && jugador1.getY() >= 4.98f) && 
 				(jugador1.getX() <= 6.335001 && jugador1.getY() <= 4.99f)) {
-			GuazoServer.manager.get("audio/music/MatWyre_Deep_Dawn.mp3", Music.class).stop();
+//			GuazoServer.manager.get("audio/music/MatWyre_Deep_Dawn.mp3", Music.class).stop();
 //			GuazoServer.manager.get("audio/sfx/muere.wav", Sound.class).play();
 			jugador1.currentState = Fumiko.State.DEAD;
 		}
@@ -175,7 +188,7 @@ public class PantallaJuego implements Screen{
 		// Pinches 3
 		if((jugador1.getX() >= 5.12f && jugador1.getY() <= 1.5f) && 
 				(jugador1.getX() <= 5.55f && jugador1.getY() >= 1.46f)) {
-			GuazoServer.manager.get("audio/music/MatWyre_Deep_Dawn.mp3", Music.class).stop();
+//			GuazoServer.manager.get("audio/music/MatWyre_Deep_Dawn.mp3", Music.class).stop();
 //			GuazoServer.manager.get("audio/sfx/muere.wav", Sound.class).play();
 			jugador1.currentState = Fumiko.State.DEAD;
 		}
@@ -185,7 +198,7 @@ public class PantallaJuego implements Screen{
 		// Usamos la ubicacion del personaje para poder determinar la meta
 		if ((jugador1.getX() <= 1.64f && jugador1.getY() >= 1.46f) &&
 				(jugador1.getX() >= 1.32f && jugador1.getY() <= 1.6f)) {
-			GuazoServer.manager.get("audio/music/MatWyre_Deep_Dawn.mp3", Music.class).stop();
+//			GuazoServer.manager.get("audio/music/MatWyre_Deep_Dawn.mp3", Music.class).stop();
 //			GuazoServer.manager.get("audio/sounds/next_level.wav", Sound.class).play();
 			jugador1.llegoSalida();
 			
@@ -195,7 +208,7 @@ public class PantallaJuego implements Screen{
 		
 		//Cuando el personaje se cae en la lava
 		if (jugador2.getY() < 0) {
-			GuazoServer.manager.get("audio/music/MatWyre_Deep_Dawn.mp3", Music.class).stop();
+//			GuazoServer.manager.get("audio/music/MatWyre_Deep_Dawn.mp3", Music.class).stop();
 //			GuazoServer.manager.get("audio/sfx/muere.wav", Sound.class).play();
 			jugador2.currentState = Fumiko.State.DEAD;
 		}
@@ -203,15 +216,15 @@ public class PantallaJuego implements Screen{
 		// Pinches 1
 		if((jugador2.getX() > 2.42f && jugador2.getY() >= 4.50f) && 
 				(jugador2.getX() <= 2.81f && jugador2.getY() <= 5.15f)) {
-			GuazoServer.manager.get("audio/music/MatWyre_Deep_Dawn.mp3", Music.class).stop();
-			GuazoServer.manager.get("audio/sfx/muere.wav", Sound.class).play();
+//			GuazoServer.manager.get("audio/music/MatWyre_Deep_Dawn.mp3", Music.class).stop();
+//			GuazoServer.manager.get("audio/sfx/muere.wav", Sound.class).play();
 			jugador2.currentState = Fumiko.State.DEAD;
 		}
 		
 		// Pinches 2
 		if((jugador2.getX() >= 4.9895763 && jugador2.getY() >= 4.98f) && 
 				(jugador2.getX() <= 6.335001 && jugador2.getY() <= 4.99f)) {
-			GuazoServer.manager.get("audio/music/MatWyre_Deep_Dawn.mp3", Music.class).stop();
+//			GuazoServer.manager.get("audio/music/MatWyre_Deep_Dawn.mp3", Music.class).stop();
 //			GuazoServer.manager.get("audio/sfx/muere.wav", Sound.class).play();
 			jugador2.currentState = Fumiko.State.DEAD;
 		}
@@ -219,7 +232,7 @@ public class PantallaJuego implements Screen{
 		// Pinches 3
 		if((jugador2.getX() >= 5.12f && jugador2.getY() <= 1.5f) && 
 				(jugador2.getX() <= 5.55f && jugador2.getY() >= 1.46f)) {
-			GuazoServer.manager.get("audio/music/MatWyre_Deep_Dawn.mp3", Music.class).stop();
+//			GuazoServer.manager.get("audio/music/MatWyre_Deep_Dawn.mp3", Music.class).stop();
 //			GuazoServer.manager.get("audio/sfx/muere.wav", Sound.class).play();
 			jugador2.currentState = Fumiko.State.DEAD;
 		}
@@ -230,7 +243,7 @@ public class PantallaJuego implements Screen{
 		if ((jugador2.getX() <= 1.64f && jugador2.getY() >= 1.46f) &&
 				(jugador2.getX() >= 1.32f && jugador2.getY() <= 1.6f)) {
 			//sonido
-			GuazoServer.manager.get("audio/music/MatWyre_Deep_Dawn.mp3", Music.class).stop();
+//			GuazoServer.manager.get("audio/music/MatWyre_Deep_Dawn.mp3", Music.class).stop();
 //			GuazoServer.manager.get("audio/sounds/next_level.wav", Sound.class).play();
 			jugador2.llegoSalida();
 		}

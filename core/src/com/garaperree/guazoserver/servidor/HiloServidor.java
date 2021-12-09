@@ -6,7 +6,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 
-import com.garaperree.guazoserver.GuazoServer;
+import com.garaperree.guazoserver.pantallas.PantallaJuego;
 import com.garaperree.guazoserver.utiles.Global;
 
 public class HiloServidor extends Thread{
@@ -15,11 +15,19 @@ public class HiloServidor extends Thread{
 	private boolean fin = false;
 	private DireccionRed[] clientes = new DireccionRed[2];
 	private int cantClientes = 0;
-	private GuazoServer app;
+	private PantallaJuego app;
 	
-	public HiloServidor(GuazoServer app) {
+	public HiloServidor(PantallaJuego app) {
 		this.app = app;
 		
+		try {
+			conexion = new DatagramSocket(8080);
+		} catch (SocketException e) {
+			e.printStackTrace();
+		} 
+	}
+	
+	public HiloServidor() {		
 		try {
 			conexion = new DatagramSocket(8080);
 		} catch (SocketException e) {
@@ -73,17 +81,54 @@ public class HiloServidor extends Thread{
 			if(nroCliente!=-1) {
 				if (msg.equals("ApreteArriba")){
 					if(nroCliente==0) {
-						
+						app.isUp1 = true;
+					} else {
+						app.isUp2 = true;
 					}
 					
 				} else if(msg.equals("ApreteDerecha")) {
+					if(nroCliente==0) {
+						app.isRight1 = true;
+					} else {
+						app.isRight2 = true;
+					}
 					
 				} else if(msg.equals("ApreteIzquierda")) {
+					if(nroCliente==0) {
+						app.isLeft1 = true;
+					} else {
+						app.isLeft2 = true;
+					}	
+				}
+				
+				else if(msg.equals("NoApreteIzquierda")) {
+					if(nroCliente==0) {
+						app.isLeft1 = false;
+					} else {
+						app.isLeft2 = false;
+					}	
+				}
+			
+				else if(msg.equals("NoApreteDerecha")) {
+					if(nroCliente==0) {
+						app.isRight1 = false;
+					} else {
+						app.isRight2 = false;
+					}
+					
+				} 
+				else if (msg.equals("NoApreteArriba")){
+					if(nroCliente==0) {
+						app.isUp1 = false;
+					} else {
+						app.isUp2 = false;
+					}
 					
 				}
+				
+				} 
 			}
 		}
-	}
 	
 	public void enviarMensaje(String msg, InetAddress ip, int puerto) {
 		byte[] data = msg.getBytes();
