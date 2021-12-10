@@ -1,10 +1,8 @@
 package com.garaperree.guazoserver.pantallas;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -113,14 +111,14 @@ public class PantallaJuego implements Screen{
 			jugador2.jump();
 		}
 		if(isRight1) {
-			jugador1.b2body.applyLinearImpulse(new Vector2(0.1f, 0),jugador1.b2body.getWorldCenter(), true);
+			jugador1.right();
 		} else if(isRight2) {
-			jugador2.b2body.applyLinearImpulse(new Vector2(0.1f, 0),jugador1.b2body.getWorldCenter(), true);
+			jugador2.right();
 		}
 		if(isLeft1) {
-			jugador1.b2body.applyLinearImpulse(new Vector2(-0.1f, 0),jugador1.b2body.getWorldCenter(), true);
+			jugador1.left();
 		} else if(isLeft2) {
-			jugador2.b2body.applyLinearImpulse(new Vector2(-0.1f, 0),jugador1.b2body.getWorldCenter(), true);
+			jugador2.left();
 		}
 		
 		// controlar a nuestro jugador mediante impulsos

@@ -115,20 +115,18 @@ public class HiloServidor extends Thread{
 					} else {
 						app.isRight2 = false;
 					}
-					
 				} 
+				
 				else if (msg.equals("NoApreteArriba")){
 					if(nroCliente==0) {
 						app.isUp1 = false;
 					} else {
 						app.isUp2 = false;
 					}
-					
 				}
-				
-				} 
-			}
+			} 
 		}
+	}
 	
 	public void enviarMensaje(String msg, InetAddress ip, int puerto) {
 		byte[] data = msg.getBytes();
