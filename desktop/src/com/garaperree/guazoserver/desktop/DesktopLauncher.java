@@ -10,7 +10,7 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.width = Config.ANCHO;
 		config.height = Config.ALTO;
-		config.title = "El mejor juego del mundo";
+		config.title = "Server";
 		new LwjglApplication(new GuazoServer(), config);
 	}
 }
