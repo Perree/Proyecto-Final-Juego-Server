@@ -4,10 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.garaperree.guazoserver.GuazoServer;
 
 public class Render {
-	
 	public static SpriteBatch sb = new SpriteBatch();
 	public static ShapeRenderer sr = new ShapeRenderer();
 	

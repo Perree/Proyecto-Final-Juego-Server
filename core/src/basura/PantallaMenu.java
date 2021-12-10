@@ -1,4 +1,4 @@
-package com.garaperree.guazoserver.pantallas;
+package basura;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;

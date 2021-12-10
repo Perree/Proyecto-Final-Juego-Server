@@ -1,6 +1,5 @@
 package com.garaperree.guazoserver.objetos;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapObject;
 import com.garaperree.guazoserver.GuazoServer;
 import com.garaperree.guazoserver.pantallas.PantallaJuego;
@@ -16,7 +15,6 @@ public class Meta extends ObjetosInteractivos{
 
 	@Override
 	public void contactColision(Fumiko fumiko) {
-		Gdx.app.log("Meta", "Collision");
 		setCategoryFilter(GuazoServer.DESTROYED_BIT);
 	}
 

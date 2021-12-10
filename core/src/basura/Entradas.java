@@ -1,4 +1,4 @@
-package com.garaperree.guazoserver.io;
+package basura;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;

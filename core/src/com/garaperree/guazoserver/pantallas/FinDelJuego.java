@@ -15,13 +15,9 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.garaperree.guazoserver.GuazoServer;
 
 public class FinDelJuego implements Screen{
-
 	private Viewport viewport;
 	private Stage stage;
-	
 	private Game game; 
-	
-	
 	
 	public FinDelJuego(Game game, String nombre) {
 		this.game = game;
@@ -71,8 +67,6 @@ public class FinDelJuego implements Screen{
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -85,37 +79,27 @@ public class FinDelJuego implements Screen{
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.draw();
-		
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void pause() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void resume() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void hide() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void dispose() {
 		stage.dispose();
-		
 	}
 
 }

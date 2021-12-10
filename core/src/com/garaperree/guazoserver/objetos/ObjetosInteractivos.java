@@ -26,15 +26,13 @@ public abstract class ObjetosInteractivos {
 	protected PantallaJuego screen;
 	protected MapObject object;
 	
-	
+	// Definimos los objetos con los cuales el personaje va a interactuar
 	public ObjetosInteractivos(PantallaJuego screen, MapObject object) {
 		this.object = object;
         this.screen = screen;
 		this.world = screen.getWorld();
 		this.map = screen.getMap();
 		this.bounds = ((RectangleMapObject) object).getRectangle();
-		
-		
 		
 		BodyDef bdef = new BodyDef();
 		FixtureDef fdef = new FixtureDef();
@@ -48,11 +46,12 @@ public abstract class ObjetosInteractivos {
 		shape.setAsBox(bounds.getWidth()/2/GuazoServer.PPM, bounds.getHeight()/2/GuazoServer.PPM);
 		fdef.shape = shape;
 		fixture = body.createFixture(fdef);
-		
 	}
 	
+	// Metodo que detecta cuando hay colisions
 	public abstract void contactColision(Fumiko fumiko);
 	
+	// Seteamos el filtro
 	public void setCategoryFilter(short filterBit) {
 		Filter filter = new Filter();
 		filter.categoryBits = filterBit;

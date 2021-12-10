@@ -1,4 +1,4 @@
-package com.garaperree.guazoserver.utiles;
+package com.garaperree.guazoserver.objetos;
 
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -10,9 +10,6 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.garaperree.guazoserver.GuazoServer;
-import com.garaperree.guazoserver.objetos.Lava;
-import com.garaperree.guazoserver.objetos.Meta;
-import com.garaperree.guazoserver.objetos.Pinches;
 import com.garaperree.guazoserver.pantallas.PantallaJuego;
 
 public class B2WorldCreator {
