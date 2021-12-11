@@ -25,6 +25,9 @@ public class PantallaJuego implements Screen{
 	private GuazoServer game;
 	private TextureAtlas atlas;
 	
+	// Red
+	private HiloServidor hs;
+	
 	// Control de camara
 	private OrthographicCamera gamecam;
 	private Viewport gamePort;
@@ -43,9 +46,6 @@ public class PantallaJuego implements Screen{
 	
 	// Referenciar a nuestro personaje principal (sprites)
 	private Fumiko jugador1, jugador2;
-	
-	// Red
-	private HiloServidor hs;
 	
 	// Booleanos para la red
 	public boolean isRight1=false, isUp1=false, isRight2=false, isUp2=false, isLeft1=false, isLeft2=false;
@@ -91,8 +91,6 @@ public class PantallaJuego implements Screen{
 		jugador1 = new Fumiko(this);
 		jugador2 = new Fumiko(this);
 		
-		hs.enviarMensajeATodos("Actualizar-P1-"+jugador1.getY());
-		
 		world.setContactListener(new WorldContactListener());		
 	}
 
@@ -108,7 +106,6 @@ public class PantallaJuego implements Screen{
 	// Controlar jugador
 	private void handleInput(float dt) {
 		if(isUp1) {
-			System.out.println("PUTO");
 			jugador1.jump();
 		} else if(isUp2) {
 			jugador2.jump();
@@ -160,6 +157,8 @@ public class PantallaJuego implements Screen{
 		jugador1.update(dt);
 		jugador2.update(dt);
 		hud.update(dt);
+		
+		hs.enviarMensajeATodos("Actualizar-P1-"+jugador1.getY());
 		
 		jugadorGanaMuere();
 		

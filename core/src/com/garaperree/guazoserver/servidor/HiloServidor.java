@@ -21,7 +21,7 @@ public class HiloServidor extends Thread{
 		this.app = app;
 		
 		try {
-			conexion = new DatagramSocket(8880);
+			conexion = new DatagramSocket(8080);
 		} catch (SocketException e) {
 			e.printStackTrace();
 		} 
@@ -139,7 +139,7 @@ public class HiloServidor extends Thread{
 	
 	public void enviarMensajeATodos(String msg) {
 		for (int i = 0; i < clientes.length; i++) {
-			enviarMensaje("gay", clientes[i].getIp(), clientes[i].getPuerto());
+			enviarMensaje(msg, clientes[i].getIp(), clientes[i].getPuerto());
 		}
 	}
 
