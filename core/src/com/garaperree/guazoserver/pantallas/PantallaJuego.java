@@ -2,6 +2,7 @@ package com.garaperree.guazoserver.pantallas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -14,10 +15,14 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.garaperree.guazoserver.GuazoServer;
+import com.garaperree.guazoserver.diseños.Recursos;
+import com.garaperree.guazoserver.diseños.Texto;
 import com.garaperree.guazoserver.escenas.Hud;
 import com.garaperree.guazoserver.objetos.B2WorldCreator;
 import com.garaperree.guazoserver.servidor.HiloServidor;
 import com.garaperree.guazoserver.sprites.Fumiko;
+import com.garaperree.guazoserver.utiles.Global;
+import com.garaperree.guazoserver.utiles.Render;
 import com.garaperree.guazoserver.utiles.WorldContactListener;
 
 public class PantallaJuego implements Screen{
@@ -27,6 +32,9 @@ public class PantallaJuego implements Screen{
 	
 	// Red
 	private HiloServidor hs;
+	
+	// Diseños
+	private Texto espera;
 	
 	// Control de camara
 	private OrthographicCamera gamecam;
@@ -50,13 +58,17 @@ public class PantallaJuego implements Screen{
 	// Booleanos para la red
 	public boolean isRight1=false, isUp1=false, isRight2=false, isUp2=false, isLeft1=false, isLeft2=false;
 	
-	public PantallaJuego(GuazoServer game, HiloServidor hs) {
+	public PantallaJuego(GuazoServer game) {
 		this.game = game;
-		this.hs = hs;
 		
 		// Hilo Servidor 
 		hs = new HiloServidor(this);
 		hs.start();
+		
+		// Texto para la conexion
+		espera = new Texto(Recursos.FUENTE, 100, Color.WHITE, false);
+		espera.setTexto("Esperando jugadores...");
+		espera.setPosition((GuazoServer.V_WIDTH/2)-(espera.getAncho()/2), (GuazoServer.V_HEIGHT/2)+(espera.getAlto()/2));
 		
 		// Carga las texturas del personaje
 		atlas = new TextureAtlas("fumiko/personaje.atlas");
@@ -106,20 +118,26 @@ public class PantallaJuego implements Screen{
 	// Controlar jugador
 	private void handleInput(float dt) {
 		if(isUp1) {
+			System.out.print("Jugador 1 Salta");
 			jugador1.jump();
 		} else if(isUp2) {
+			System.out.print("Jugador 2 Salta");
 			jugador2.jump();
-		}
+		} 
 		
 		if(isRight1) {
+			System.out.print("Jugador 1 Derecha");
 			jugador1.right();
 		} else if(isRight2) {
+			System.out.print("Jugador 2 Derecha");
 			jugador2.right();
 		}
 		
 		if(isLeft1) {
+			System.out.print("Jugador 1 Izquierda");
 			jugador1.left();
 		} else if(isLeft2) {
+			System.out.print("Jugador 2 Izquierda");
 			jugador2.left();
 		}
 		
@@ -158,7 +176,7 @@ public class PantallaJuego implements Screen{
 		jugador2.update(dt);
 		hud.update(dt);
 		
-		hs.enviarMensajeATodos("Actualizar-P1-"+jugador1.getY());
+//		hs.enviarMensajeATodos("Actualizar!P1!"+jugador1.getY());
 		
 		jugadorGanaMuere();
 		
@@ -236,50 +254,56 @@ public class PantallaJuego implements Screen{
 
 	@Override
 	public void render(float delta) {
-		
-		// Separa la actualizacion logica del renderizado
-		update(delta);
-		
-		// Limpiar pantalla con negro
-		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); 
-		
-		// Renderizar el mapa del juego
-		renderer.render();
-		
-		// Renderizar Box2DDebugRenderer
-		b2dr.render(world, gamecam.combined);
-		
-		game.batch.setProjectionMatrix(gamecam.combined);
-		game.batch.begin();
-		jugador1.draw(game.batch);
-		jugador2.draw(game.batch);
-		game.batch.end();
-		
-		// Setea el batch para dibujar el hud
-		game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
-		hud.stage.draw();
-		
-		// Si el tiempo se acaba, se termina el juego
-		if(hud.getWorldTimer()==0) {
-			finishing();
-		}
-		
-		// Llego a la meta GANO!
-		if(jugador1.isPuedeSalir()) {
-			String nombre = "Jugador 1";
-			finishing(nombre);
-		}
-		
-		// Llego a la meta GANO!
-		if(jugador2.isPuedeSalir()) {
-			String nombre = "Jugador 2";
-			finishing(nombre);
-		}
-		
-		// El personaje perdio
-		if(FinJuego()) {
-			finishing();
+		Render.limpiarPantalla();
+		if(!Global.empieza) {
+			Render.begin();
+			espera.dibujar();
+			Render.end();
+		}else {
+			// Separa la actualizacion logica del renderizado
+			update(delta);
+			
+			// Limpiar pantalla con negro
+			Gdx.gl.glClearColor(0, 0, 0, 1);
+			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); 
+			
+			// Renderizar el mapa del juego
+			renderer.render();
+			
+			// Renderizar Box2DDebugRenderer
+			b2dr.render(world, gamecam.combined);
+			
+			game.batch.setProjectionMatrix(gamecam.combined);
+			game.batch.begin();
+			jugador1.draw(game.batch);
+			jugador2.draw(game.batch);
+			game.batch.end();
+			
+			// Setea el batch para dibujar el hud
+			game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+			hud.stage.draw();
+			
+			// Si el tiempo se acaba, se termina el juego
+			if(hud.getWorldTimer()==0) {
+				finishing();
+			}
+			
+			// Llego a la meta GANO!
+			if(jugador1.isPuedeSalir()) {
+				String nombre = "Jugador 1";
+				finishing(nombre);
+			}
+			
+			// Llego a la meta GANO!
+			if(jugador2.isPuedeSalir()) {
+				String nombre = "Jugador 2";
+				finishing(nombre);
+			}
+			
+			// El personaje perdio
+			if(FinJuego()) {
+				finishing();
+			}
 		}
 	}
 

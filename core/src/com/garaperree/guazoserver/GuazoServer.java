@@ -3,9 +3,6 @@ package com.garaperree.guazoserver;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.garaperree.guazoserver.pantallas.PantallaJuego;
-import com.garaperree.guazoserver.servidor.HiloServidor;
-import com.garaperree.guazoserver.utiles.Global;
-import com.garaperree.guazoserver.utiles.Render;
 
 public class GuazoServer extends Game {
 
@@ -29,42 +26,17 @@ public class GuazoServer extends Game {
 	
 	public SpriteBatch batch;
 	
-	// Diseños
-//	private Texto espera;
-	
-	// Red
-	private HiloServidor hs;
-	
-	private PantallaJuego app;
-	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		
-		// Texto para la conexion
-//		espera = new Texto(Recursos.FUENTE, 100, Color.WHITE, false);
-//		espera.setTexto("Esperando jugadores...");
-//		espera.setPosition((Config.ANCHO/2)-(espera.getAncho()/2), (Config.ALTO/2)+(espera.getAlto()/2));
-		
-		// Hilo servidor
-		hs = new HiloServidor(app);
-		hs.start();
-		
-		setScreen(new PantallaJuego(this, hs));
+
+		setScreen(new PantallaJuego(this));
 	}
 
 	@Override
 	public void render () {
-		Render.limpiarPantalla();
-		if(!Global.empieza) {
-			System.out.println("Esperando a que empiece la partida");
-//			Render.begin();
-//			espera.dibujar();
-//			Render.end();
-		}else {
-			// delegar el metodo de render para la pantalla del juego
-			super.render(); 
-		}
+		// delegar el metodo de render para la pantalla del juego
+		super.render(); 
 	}
 	
 	@Override

@@ -19,21 +19,12 @@ public class HiloServidor extends Thread{
 	
 	public HiloServidor(PantallaJuego app) {
 		this.app = app;
-		
 		try {
 			conexion = new DatagramSocket(8080);
 		} catch (SocketException e) {
 			e.printStackTrace();
 		} 
 	}
-	
-//	public HiloServidor() {		
-//		try {
-//			conexion = new DatagramSocket(8080);
-//		} catch (SocketException e) {
-//			e.printStackTrace();
-//		} 
-//	}
 	
 	@Override
 	public void run() {
@@ -78,10 +69,14 @@ public class HiloServidor extends Thread{
 			} 
 		} else {
 			if(nroCliente!=-1) {
+				System.out.println("Entre aca para moverme");
 				if (msg.equals("ApreteArriba")){
+					System.out.println("probando");
 					if(nroCliente==0) {
+						System.out.println("llega apreto arriba");
 						app.isUp1 = true;
 					} else {
+						System.out.println("llega apreto arriba");
 						app.isUp2 = true;
 					}
 					
@@ -129,8 +124,8 @@ public class HiloServidor extends Thread{
 	
 	public void enviarMensaje(String msg, InetAddress ip, int puerto) {
 		byte[] data = msg.getBytes();
+		DatagramPacket dp = new DatagramPacket(data, data.length, ip, puerto);
 		try {
-			DatagramPacket dp = new DatagramPacket(data, data.length, ip, puerto);
 			conexion.send(dp);
 		} catch (IOException e) {
 			e.printStackTrace();

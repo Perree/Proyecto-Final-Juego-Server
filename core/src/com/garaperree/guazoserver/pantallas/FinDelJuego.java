@@ -13,13 +13,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.garaperree.guazoserver.GuazoServer;
-import com.garaperree.guazoserver.servidor.HiloServidor;
 
 public class FinDelJuego implements Screen{
 	private Viewport viewport;
 	private Stage stage;
 	private Game game; 
-	private HiloServidor hs;
 	
 	public FinDelJuego(Game game, String nombre) {
 		this.game = game;
@@ -74,7 +72,7 @@ public class FinDelJuego implements Screen{
 	@Override
 	public void render(float delta) {
 		if(Gdx.input.justTouched()) {
-			game.setScreen(new PantallaJuego((GuazoServer) game, hs));
+			game.setScreen(new PantallaJuego((GuazoServer) game));
 			dispose();
 		}
 			
