@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.garaperree.guazoserver.GuazoServer;
 import com.garaperree.guazoserver.escenas.Hud;
 import com.garaperree.guazoserver.objetos.B2WorldCreator;
+import com.garaperree.guazoserver.servidor.HiloServidor;
 import com.garaperree.guazoserver.sprites.Fumiko;
 import com.garaperree.guazoserver.utiles.WorldContactListener;
 
@@ -43,11 +44,16 @@ public class PantallaJuego implements Screen{
 	// Referenciar a nuestro personaje principal (sprites)
 	private Fumiko jugador1, jugador2;
 	
+	private HiloServidor hs;
+	
 	// Booleanos para la red
 	public boolean isRight1=false, isUp1=false, isRight2=false, isUp2=false, isLeft1=false, isLeft2=false;
 	
-	public PantallaJuego(GuazoServer game) {
+	public PantallaJuego(GuazoServer game, HiloServidor hs) {
 		this.game = game;
+		
+		hs = new HiloServidor(this);
+		hs.start();
 		
 		// Carga las texturas del personaje
 		atlas = new TextureAtlas("fumiko/personaje.atlas");
@@ -82,6 +88,8 @@ public class PantallaJuego implements Screen{
 		jugador1 = new Fumiko(this);
 		jugador2 = new Fumiko(this);
 		
+		hs.enviarMensajeATodos("Actualizar-P1-"+jugador1.getY());
+		
 		world.setContactListener(new WorldContactListener());		
 	}
 
@@ -96,17 +104,19 @@ public class PantallaJuego implements Screen{
 	
 	// Controlar jugador
 	private void handleInput(float dt) {
-		
 		if(isUp1) {
+			System.out.println("PUTO");
 			jugador1.jump();
 		} else if(isUp2) {
 			jugador2.jump();
 		}
+		
 		if(isRight1) {
 			jugador1.right();
 		} else if(isRight2) {
 			jugador2.right();
 		}
+		
 		if(isLeft1) {
 			jugador1.left();
 		} else if(isLeft2) {

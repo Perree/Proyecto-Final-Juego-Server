@@ -67,7 +67,7 @@ public class HiloServidor extends Thread{
 				System.out.println("Llega msg conexion cliente " + cantClientes);
 				if(cantClientes<2) {
 					clientes[cantClientes] = new DireccionRed(dp.getAddress(), dp.getPort());
-					enviarMensaje("Ok", clientes[cantClientes].getIp(), clientes[cantClientes++].getPuerto());
+					enviarMensaje("Ok"+(nroCliente+1), clientes[cantClientes].getIp(), clientes[cantClientes++].getPuerto());
 					if(cantClientes==2) {
 						Global.empieza = true;
 						for(int i = 0; i < clientes.length; i++) {
@@ -77,7 +77,6 @@ public class HiloServidor extends Thread{
 				} 
 			} 
 		} else {
-			
 			if(nroCliente!=-1) {
 				if (msg.equals("ApreteArriba")){
 					if(nroCliente==0) {
@@ -135,6 +134,12 @@ public class HiloServidor extends Thread{
 			conexion.send(dp);
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public void enviarMensajeATodos(String msg) {
+		for (int i = 0; i < clientes.length; i++) {
+			enviarMensaje(msg, clientes[i].getIp(), clientes[i].getPuerto());
 		}
 	}
 
