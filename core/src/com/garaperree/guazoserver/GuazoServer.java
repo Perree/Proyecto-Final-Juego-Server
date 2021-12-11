@@ -1,16 +1,12 @@
 package com.garaperree.guazoserver;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.garaperree.guazoserver.diseños.Recursos;
 import com.garaperree.guazoserver.diseños.Texto;
 import com.garaperree.guazoserver.pantallas.PantallaJuego;
 import com.garaperree.guazoserver.servidor.HiloServidor;
 import com.garaperree.guazoserver.utiles.Global;
 import com.garaperree.guazoserver.utiles.Render;
-
-import basura.Config;
 
 public class GuazoServer extends Game {
 
@@ -47,13 +43,13 @@ public class GuazoServer extends Game {
 		batch = new SpriteBatch();
 		
 		// Texto para la conexion
-		espera = new Texto(Recursos.FUENTE, 100, Color.WHITE, false);
-		espera.setTexto("Esperando jugadores...");
-		espera.setPosition((Config.ANCHO/2)-(espera.getAncho()/2), (Config.ALTO/2)+(espera.getAlto()/2));
+//		espera = new Texto(Recursos.FUENTE, 100, Color.WHITE, false);
+//		espera.setTexto("Esperando jugadores...");
+//		espera.setPosition((Config.ANCHO/2)-(espera.getAncho()/2), (Config.ALTO/2)+(espera.getAlto()/2));
 		
 		// Hilo servidor
-		hs = new HiloServidor();
-		hs.start();
+//		hs = new HiloServidor();
+//		hs.start();
 		
 		setScreen(new PantallaJuego(this, hs));
 	}
