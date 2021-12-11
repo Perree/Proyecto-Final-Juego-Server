@@ -27,13 +27,13 @@ public class HiloServidor extends Thread{
 		} 
 	}
 	
-	public HiloServidor() {		
-		try {
-			conexion = new DatagramSocket(8080);
-		} catch (SocketException e) {
-			e.printStackTrace();
-		} 
-	}
+//	public HiloServidor() {		
+//		try {
+//			conexion = new DatagramSocket(8080);
+//		} catch (SocketException e) {
+//			e.printStackTrace();
+//		} 
+//	}
 	
 	@Override
 	public void run() {
@@ -139,7 +139,7 @@ public class HiloServidor extends Thread{
 	
 	public void enviarMensajeATodos(String msg) {
 		for (int i = 0; i < clientes.length; i++) {
-			enviarMensaje(msg, clientes[i].getIp(), clientes[i].getPuerto());
+			enviarMensaje("gay", clientes[i].getIp(), clientes[i].getPuerto());
 		}
 	}
 

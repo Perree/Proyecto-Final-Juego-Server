@@ -29,7 +29,7 @@ public class PantallaJuego implements Screen{
 	private OrthographicCamera gamecam;
 	private Viewport gamePort;
 	
-	// Overlays Lo CAMBIE A PRIVADO !!GUARDA!!
+	// Overlays lo CAMBIE A PRIVADO !!GUARDA!!
 	private Hud hud;
 	
 	// Variables del Tiled map
@@ -44,6 +44,7 @@ public class PantallaJuego implements Screen{
 	// Referenciar a nuestro personaje principal (sprites)
 	private Fumiko jugador1, jugador2;
 	
+	// Red
 	private HiloServidor hs;
 	
 	// Booleanos para la red
@@ -51,7 +52,9 @@ public class PantallaJuego implements Screen{
 	
 	public PantallaJuego(GuazoServer game, HiloServidor hs) {
 		this.game = game;
+		this.hs = hs;
 		
+		// Hilo Servidor 
 		hs = new HiloServidor(this);
 		hs.start();
 		
