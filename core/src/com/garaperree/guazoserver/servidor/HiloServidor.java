@@ -21,7 +21,7 @@ public class HiloServidor extends Thread{
 		this.app = app;
 		
 		try {
-			conexion = new DatagramSocket(8080);
+			conexion = new DatagramSocket(8880);
 		} catch (SocketException e) {
 			e.printStackTrace();
 		} 
