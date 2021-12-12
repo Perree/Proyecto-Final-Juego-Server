@@ -1,10 +1,11 @@
-package com.garaperree.guazoserver.servidor;
+ package com.garaperree.guazoserver.servidor;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+
 import com.garaperree.guazoserver.utiles.Utiles;
 
 public class HiloServidor extends Thread{
@@ -39,17 +40,20 @@ public class HiloServidor extends Thread{
 	
 	private void procesarMensaje(DatagramPacket dp) { 
 		String msg = (new String(dp.getData())).trim(); 
+		
 		System.out.println("Mensaje = "+ msg);
 		
 			if(msg.equals("Conexion")) {
+				
 				System.out.println("Llega msg conexion cliente " + cantClientes);
+				
 				if(cantClientes<2) {
 					this.clientes[cantClientes] = new DireccionRed(dp.getAddress(), dp.getPort());
 					enviarMensaje("ConexionAceptada"+(cantClientes+1), dp.getAddress(), dp.getPort());
 					cantClientes++;  
-//					enviarMensaje("Ok"+(nroCliente+1), clientes[cantClientes].getIp(), clientes[cantClientes++].getPuerto());
+					
 					if(cantClientes==2) {
-						Utiles.listener.empieza();
+						Utiles.listener.empezar();
 						enviarMensajeATodos("Empieza");
 					}
 				} 

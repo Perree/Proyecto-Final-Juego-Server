@@ -310,9 +310,6 @@ public class PantallaJuego implements Screen, JuegoEventListener{
 			jugador2.draw(game.batch);
 			game.batch.end();
 			
-//			hs.enviarMensajeATodos("Actualizar!P1!"+jugador1.getY());
-			
-			
 			// Setea el batch para dibujar el hud
 			game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
 			hud.stage.draw();
@@ -408,7 +405,7 @@ public class PantallaJuego implements Screen, JuegoEventListener{
 
 
 	@Override
-	public void empieza() {
+	public void empezar() {
 		this.empieza = true;
 	}
 
