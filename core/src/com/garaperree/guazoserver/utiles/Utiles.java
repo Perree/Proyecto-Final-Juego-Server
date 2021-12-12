@@ -4,10 +4,13 @@ import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
+import com.garaperree.guazoserver.io.JuegoEventListener;
+
 public class Utiles {
 	
 	public static Random r = new Random();
 	public static Scanner s = new Scanner(System.in);
+	public static JuegoEventListener listener;
 	
 	//Delay de espera
 	

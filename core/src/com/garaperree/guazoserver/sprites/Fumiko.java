@@ -19,6 +19,7 @@ public class Fumiko extends Sprite{
 	public enum State { FALLING, JUMPING, STANDING, RUNNING, DEAD};
 	
 	public boolean fin = false;
+	public boolean mueveArriba, mueveIzquierda, mueveDerecha;
 	
 	public State currentState;
 	public State previousState;

@@ -29,7 +29,6 @@ public class GuazoServer extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-
 		setScreen(new PantallaJuego(this));
 	}
 

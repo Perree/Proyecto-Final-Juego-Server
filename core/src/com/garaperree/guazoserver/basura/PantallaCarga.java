@@ -1,8 +1,7 @@
-package basura;
+package com.garaperree.guazoserver.basura;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.garaperree.guazoserver.diseños.Imagen;
 import com.garaperree.guazoserver.diseños.Recursos;
 import com.garaperree.guazoserver.utiles.Render;
 
@@ -57,7 +56,7 @@ public class PantallaCarga implements Screen{
 		if(termina) {
 			contTiempoTermina += 0.04f;
 			if(contTiempoTermina>tiempoTermina) {
-				Render.sb.setScreen(new PantallaMenu());
+//				Render.sb.setScreen(new PantallaMenu());
 			}
 		}
 	}

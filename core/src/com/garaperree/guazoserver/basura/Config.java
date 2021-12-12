@@ -1,4 +1,4 @@
-package basura;
+package com.garaperree.guazoserver.basura;
 
 public class Config {
 

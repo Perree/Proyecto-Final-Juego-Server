@@ -5,20 +5,17 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
-
-import com.garaperree.guazoserver.pantallas.PantallaJuego;
-import com.garaperree.guazoserver.utiles.Global;
+import com.garaperree.guazoserver.utiles.Utiles;
 
 public class HiloServidor extends Thread{
 	
 	private DatagramSocket conexion;
 	private boolean fin = false;
-	private DireccionRed[] clientes = new DireccionRed[2];
 	private int cantClientes = 0;
-	private PantallaJuego app;
+	private int maxClientes = 2;
+	private DireccionRed[] clientes = new DireccionRed[maxClientes];
 	
-	public HiloServidor(PantallaJuego app) {
-		this.app = app;
+	public HiloServidor() {
 		try {
 			conexion = new DatagramSocket(8080);
 		} catch (SocketException e) {
@@ -43,84 +40,131 @@ public class HiloServidor extends Thread{
 	private void procesarMensaje(DatagramPacket dp) { 
 		String msg = (new String(dp.getData())).trim(); 
 		System.out.println("Mensaje = "+ msg);
-		int nroCliente = -1;
-		
-		if(cantClientes>1) {
-			for (int i = 0; i < clientes.length; i++) {
-				if(dp.getPort()==clientes[i].getPuerto() && dp.getAddress().equals(clientes[i].getIp())) {
-					nroCliente=i;
-				}
-			}
-		}
+//		int nroCliente = -1;
+//		
+//		if(cantClientes>1) {
+//			for (int i = 0; i < clientes.length; i++) {
+//				if(dp.getPort()==clientes[i].getPuerto() && dp.getAddress().equals(clientes[i].getIp())) {
+//					nroCliente=i;
+//				}
+//			}
+//		}
 		
 		if(cantClientes<2) {
 			if(msg.equals("Conexion")) {
 				System.out.println("Llega msg conexion cliente " + cantClientes);
 				if(cantClientes<2) {
-					clientes[cantClientes] = new DireccionRed(dp.getAddress(), dp.getPort());
-					enviarMensaje("Ok"+(nroCliente+1), clientes[cantClientes].getIp(), clientes[cantClientes++].getPuerto());
+					this.clientes[cantClientes] = new DireccionRed(dp.getAddress(), dp.getPort());
+					enviarMensaje("ConexionAceptada"+(cantClientes+1), dp.getAddress(), dp.getPort());
+					cantClientes++;
+//					enviarMensaje("Ok"+(nroCliente+1), clientes[cantClientes].getIp(), clientes[cantClientes++].getPuerto());
 					if(cantClientes==2) {
-						Global.empieza = true;
+						Utiles.listener.empieza();
 						for(int i = 0; i < clientes.length; i++) {
-							enviarMensaje("Empieza", clientes[i].getIp(), clientes[i].getPuerto());
+							enviarMensajeATodos("Empieza");
+//							enviarMensaje("Empieza", clientes[i].getIp(), clientes[i].getPuerto());
 						}
 					}
 				} 
 			} 
-		} else {
-			if(nroCliente!=-1) {
-				if (msg.equals("ApreteArriba")){
-					System.out.println("probando");
-					if(nroCliente==0) {
-						System.out.println("llega apreto arriba");
-						app.isUp1 = true;
-					} else {
-						System.out.println("llega apreto arriba");
-						app.isUp2 = true;
-					}
-					
-				} else if(msg.equals("ApreteDerecha")) {
-					if(nroCliente==0) {
-						app.isRight1 = true;
-					} else {
-						app.isRight2 = true;
-					}
-					
-				} else if(msg.equals("ApreteIzquierda")) {
-					if(nroCliente==0) {
-						app.isLeft1 = true;
-					} else {
-						app.isLeft2 = true;
-					}	
-				}
-				
-				else if(msg.equals("NoApreteIzquierda")) {
-					if(nroCliente==0) {
-						app.isLeft1 = false;
-					} else {
-						app.isLeft2 = false;
-					}	
-				}
 			
-				else if(msg.equals("NoApreteDerecha")) {
-					if(nroCliente==0) {
-						app.isRight1 = false;
-					} else {
-						app.isRight2 = false;
-					}
-				} 
+			if(cantClientes==2) {
+				int nroPlayer = obtenerNroPlayer(dp.getAddress(), dp.getPort());
 				
-				else if (msg.equals("NoApreteArriba")){
-					if(nroCliente==0) {
-						app.isUp1 = false;
-					} else {
-						app.isUp2 = false;
-					}
+				if(msg.equals("ApretoArriba")) {
+					Utiles.listener.apretoTecla(nroPlayer, "Arriba");
 				}
-			} 
-		}
+				
+				if(msg.equals("ApretoIzquierda")) {
+					Utiles.listener.apretoTecla(nroPlayer, "Izquierda");
+				}
+				
+				if(msg.equals("ApretoDerecha")) {
+					Utiles.listener.apretoTecla(nroPlayer, "Derecha");
+				}
+				
+				if(msg.equals("NoApretoArriba")) {
+					Utiles.listener.soltoTecla(nroPlayer, "Arriba");
+				}
+				
+				if(msg.equals("NoApretoIzquierda")) {
+					Utiles.listener.soltoTecla(nroPlayer, "Izquierda");
+				}
+				
+				if(msg.equals("NoApretoDerecha")) {
+					Utiles.listener.soltoTecla(nroPlayer, "Derecha");
+				}
+			}
+		} 
+//		else {
+//			if(nroCliente!=-1) {
+//				if (msg.equals("ApreteArriba")){
+//					System.out.println("probando");
+//					if(nroCliente==0) {
+//						System.out.println("llega apreto arriba");
+////						app.isUp1 = true;
+//					} else {
+//						System.out.println("llega apreto arriba");
+////						app.isUp2 = true; 
+//					}
+//					
+//				} else if(msg.equals("ApreteDerecha")) {
+//					if(nroCliente==0) {
+////						app.isRight1 = true;
+//					} else {
+////						app.isRight2 = true;
+//					}
+//					
+//				} else if(msg.equals("ApreteIzquierda")) {
+//					if(nroCliente==0) {
+////						app.isLeft1 = true;
+//					} else {
+////						app.isLeft2 = true;
+//					}	
+//				}
+//				
+//				else if(msg.equals("NoApreteIzquierda")) {
+//					if(nroCliente==0) {
+////						app.isLeft1 = false;
+//					} else {
+////						app.isLeft2 = false;
+//					}	
+//				}
+//			
+//				else if(msg.equals("NoApreteDerecha")) {
+//					if(nroCliente==0) {
+////						app.isRight1 = false;
+//					} else {
+////						app.isRight2 = false;
+//					}
+//				} 
+//				
+//				else if (msg.equals("NoApreteArriba")){
+//					if(nroCliente==0) {
+////						app.isUp1 = false;
+//					} else {
+////						app.isUp2 = false;
+//					}
+//				}
+//			} 
+//		}
 	}
 	
+	private int obtenerNroPlayer(InetAddress address, int port) {
+		boolean fin = false;
+		int i = 0;
+		do {
+			if(address.equals(this.clientes[i].getIp())&&(port == this.clientes[i].getPuerto())) {
+				fin = true;
+			}
+			i++;
+			if(i==this.clientes.length) {
+				fin = true;
+			}
+		}while(!fin);
+		return i;
+	}
+
 	public void enviarMensaje(String msg, InetAddress ip, int puerto) {
 		byte[] data = msg.getBytes();
 		DatagramPacket dp = new DatagramPacket(data, data.length, ip, puerto);
@@ -134,7 +178,6 @@ public class HiloServidor extends Thread{
 	public void enviarMensajeATodos(String msg) {
 		for (int i = 0; i < clientes.length; i++) {
 			enviarMensaje(msg, clientes[i].getIp(), clientes[i].getPuerto());
-			System.out.println(clientes[i]+" Recibio mensaje");
 		}
 	}
 

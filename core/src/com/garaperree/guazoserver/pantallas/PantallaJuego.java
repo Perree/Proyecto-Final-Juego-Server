@@ -12,29 +12,36 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.garaperree.guazoserver.GuazoServer;
 import com.garaperree.guazoserver.diseños.Recursos;
 import com.garaperree.guazoserver.diseños.Texto;
 import com.garaperree.guazoserver.escenas.Hud;
+import com.garaperree.guazoserver.io.JuegoEventListener;
 import com.garaperree.guazoserver.objetos.B2WorldCreator;
-import com.garaperree.guazoserver.servidor.HiloServidor;
+import com.garaperree.guazoserver.servidor.Servidor;
 import com.garaperree.guazoserver.sprites.Fumiko;
-import com.garaperree.guazoserver.utiles.Global;
 import com.garaperree.guazoserver.utiles.Render;
+import com.garaperree.guazoserver.utiles.Utiles;
 import com.garaperree.guazoserver.utiles.WorldContactListener;
 
-public class PantallaJuego implements Screen{
+public class PantallaJuego implements Screen, JuegoEventListener{
 	//Referenciar a nuestro Juego, para setear las pantallas
 	private GuazoServer game;
 	private TextureAtlas atlas;
 	
 	// Red
-	private HiloServidor hs;
+	private Servidor servidor;
+//	private HiloServidor hs;
+	
+	// Booleanos para la red
+	public boolean isRight1=false, isUp1=false, isRight2=false, isUp2=false, isLeft1=false, isLeft2=false;
+	private boolean empieza = false;
 	
 	// Diseños
-	private Texto espera;
+	Texto espera;
 	
 	// Control de camara
 	private OrthographicCamera gamecam;
@@ -55,20 +62,8 @@ public class PantallaJuego implements Screen{
 	// Referenciar a nuestro personaje principal (sprites)
 	private Fumiko jugador1, jugador2;
 	
-	// Booleanos para la red
-	public boolean isRight1=false, isUp1=false, isRight2=false, isUp2=false, isLeft1=false, isLeft2=false;
-	
 	public PantallaJuego(GuazoServer game) {
 		this.game = game;
-		
-		// Hilo Servidor 
-		hs = new HiloServidor(this);
-		hs.start();
-		
-		// Texto para la conexion
-		espera = new Texto(Recursos.FUENTE, 100, Color.WHITE, false);
-		espera.setTexto("Esperando jugadores...");
-		espera.setPosition((GuazoServer.V_WIDTH/2)-(espera.getAncho()/2), (GuazoServer.V_HEIGHT/2)+(espera.getAlto()/2));
 		
 		// Carga las texturas del personaje
 		atlas = new TextureAtlas("fumiko/personaje.atlas");
@@ -103,6 +98,18 @@ public class PantallaJuego implements Screen{
 		jugador1 = new Fumiko(this);
 		jugador2 = new Fumiko(this);
 		
+		// Texto para la conexion
+		espera = new Texto(Recursos.FUENTE, 100, Color.WHITE, false);
+		espera.setTexto("Esperando jugadores...");
+		espera.setPosition((GuazoServer.V_WIDTH/2)-(espera.getAncho()/2), (GuazoServer.V_HEIGHT/2)+(espera.getAlto()/2));
+		
+		Utiles.listener = this;
+		
+		// Hilo Servidor 
+		servidor = new Servidor();
+//		hs = new HiloServidor();
+//		hs.start();
+		
 		world.setContactListener(new WorldContactListener());		
 	}
 
@@ -117,29 +124,55 @@ public class PantallaJuego implements Screen{
 	
 	// Controlar jugador
 	private void handleInput(float dt) {
-		if(isUp1) {
-			System.out.print("Jugador 1 Salta");
-			jugador1.jump();
-		} else if(isUp2) {
-			System.out.print("Jugador 2 Salta");
-			jugador2.jump();
-		} 
 		
-		if(isRight1) {
-			System.out.print("Jugador 1 Derecha");
-			jugador1.right();
-		} else if(isRight2) {
-			System.out.print("Jugador 2 Derecha");
-			jugador2.right();
+		if(jugador1.mueveArriba) {
+			jugador1.jump(); // Evitamos un poco el retraso
+			servidor.enviarATodos("coordenadas!p1!"+jugador1.getY()); // enviamos las coordenadas a los jugadores
 		}
-		
-		if(isLeft1) {
-			System.out.print("Jugador 1 Izquierda");
+		if(jugador1.mueveIzquierda) {
 			jugador1.left();
-		} else if(isLeft2) {
-			System.out.print("Jugador 2 Izquierda");
-			jugador2.left();
+			servidor.enviarATodos("coordenadas!p1!"+jugador1.getX());
 		}
+		if(jugador1.mueveDerecha) {
+			jugador1.right();
+			servidor.enviarATodos("coordenadas!p1!"+jugador1.getX());
+		}
+		if(jugador2.mueveArriba) {
+			jugador2.jump();
+			servidor.enviarATodos("coordenadas!p2!"+jugador2.getY());
+		}
+		if(jugador2.mueveIzquierda) {
+			jugador2.left();
+			servidor.enviarATodos("coordenadas!p2!"+jugador2.getX());
+		}
+		if(jugador2.mueveDerecha) {
+			jugador2.right();
+			servidor.enviarATodos("coordenadas!p2!"+jugador2.getX());
+		}
+		
+//		if(isUp1) {
+//			System.out.print("Jugador 1 Salta");
+//			jugador1.jump();
+//		} else if(isUp2) {
+//			System.out.print("Jugador 2 Salta");
+//			jugador2.jump();
+//		} 
+//		
+//		if(isRight1) {
+//			System.out.print("Jugador 1 Derecha");
+//			jugador1.right();
+//		} else if(isRight2) {
+//			System.out.print("Jugador 2 Derecha");
+//			jugador2.right();
+//		}
+//		
+//		if(isLeft1) {
+//			System.out.print("Jugador 1 Izquierda");
+//			jugador1.left();
+//		} else if(isLeft2) {
+//			System.out.print("Jugador 2 Izquierda");
+//			jugador2.left();
+//		}
 		
 		// controlar a nuestro jugador mediante impulsos
 //		if(jugador1.currentState != Fumiko.State.DEAD) {
@@ -253,7 +286,7 @@ public class PantallaJuego implements Screen{
 	@Override
 	public void render(float delta) {
 		Render.limpiarPantalla();
-		if(!Global.empieza) {
+		if(!empieza) {
 			Render.begin();
 			espera.dibujar();
 			Render.end();
@@ -277,8 +310,7 @@ public class PantallaJuego implements Screen{
 			jugador2.draw(game.batch);
 			game.batch.end();
 			
-//			+"!P2!"+jugador2.getY()
-			hs.enviarMensajeATodos("Actualizar!P1!"+jugador1.getY());
+//			hs.enviarMensajeATodos("Actualizar!P1!"+jugador1.getY());
 			
 			
 			// Setea el batch para dibujar el hud
@@ -367,8 +399,89 @@ public class PantallaJuego implements Screen{
 	public Hud getHud() {
 		return hud;
 	}
-	
-	
+
+
+	@Override
+	public boolean handle(Event event) {
+		return false;
+	}
+
+
+	@Override
+	public void empieza() {
+		this.empieza = true;
+	}
+
+
+	@Override
+	public void keyUp(int keycode) {	
+	}
+
+
+	@Override
+	public void keyDown(int keycode) {
+	}
+
+
+	@Override
+	public void apretoTecla(int nroPlayer, String tecla) {
+		if(nroPlayer==1) {
+			if(tecla.equals("Arriba")) {
+				jugador1.mueveArriba=true;
+			}
+			
+			if(tecla.equals("Izquierda")) {
+				jugador1.mueveIzquierda=true;
+			}
+			
+			if(tecla.equals("Derecha")) {
+				jugador1.mueveDerecha=true;
+			}
+		} else {
+			if(tecla.equals("Arriba")) {
+				jugador2.mueveArriba=true;
+			}
+			
+			if(tecla.equals("Izquierda")) {
+				jugador2.mueveIzquierda=true;
+			}
+			
+			if(tecla.equals("Derecha")) {
+				jugador2.mueveDerecha=true;
+			}
+		}
+	}
+
+
+	@Override
+	public void soltoTecla(int nroPlayer, String tecla) {
+		if(nroPlayer==1) {
+			if(tecla.equals("Arriba")) {
+				jugador1.mueveArriba=false;
+			}
+			
+			if(tecla.equals("Izquierda")) {
+				jugador1.mueveIzquierda=false;
+			}
+			
+			if(tecla.equals("Derecha")) {
+				jugador1.mueveDerecha=false;
+			}
+		} else {
+			if(tecla.equals("Arriba")) {
+				jugador2.mueveArriba=false;
+				
+			}
+			
+			if(tecla.equals("Izquierda")) {
+				jugador2.mueveIzquierda=false;
+			}
+			
+			if(tecla.equals("Derecha")) {
+				jugador2.mueveDerecha=false;
+			}
+		}
+	}
 }
 
 

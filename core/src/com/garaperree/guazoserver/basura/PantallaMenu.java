@@ -1,16 +1,11 @@
-package basura;
+package com.garaperree.guazoserver.basura;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g3d.particles.batches.BillboardParticleBatch.Config;
-import com.garaperree.guazoserver.diseños.Imagen;
-import com.garaperree.guazoserver.diseños.Recursos;
 import com.garaperree.guazoserver.diseños.Texto;
-import com.garaperree.guazoserver.io.Entradas;
-import com.garaperree.guazoserver.utiles.*;
 
 
 public class PantallaMenu extends InputAdapter implements Screen {
@@ -32,9 +27,9 @@ public class PantallaMenu extends InputAdapter implements Screen {
 	@Override
 	public void show() {
 			
-		fondo = new Imagen(Recursos.FONDOMENU);
-		fondo.setSize(Config.ANCHO, Config.ALTO);
-		b = Render.batch;
+//		fondo = new Imagen(Recursos.FONDOMENU);
+//		fondo.setSize(Config.ANCHO, Config.ALTO);
+//		b = Render.batch;
 		
 		
 		Gdx.input.setInputProcessor(entradas);
@@ -42,12 +37,12 @@ public class PantallaMenu extends InputAdapter implements Screen {
 		
 		
 
-		for (int i = 0; i < opciones.length; i++) {
-			opciones[i] = new Texto(Recursos.FUENTEMENU, 60, Color.WHITE, true);
-			opciones[i].setTexto(textos[i]);
-			opciones[i].setPosition((Config.ANCHO / 2) - (opciones[i].getAncho() / 2),
-					((Config.ALTO / 2) + (opciones[0].getAlto() / 2)) - ((opciones[i].getAlto()+(avance * i))));
-		}
+//		for (int i = 0; i < opciones.length; i++) {
+//			opciones[i] = new Texto(Recursos.FUENTEMENU, 60, Color.WHITE, true);
+//			opciones[i].setTexto(textos[i]);
+//			opciones[i].setPosition((Config.ANCHO / 2) - (opciones[i].getAncho() / 2),
+//					((Config.ALTO / 2) + (opciones[0].getAlto() / 2)) - ((opciones[i].getAlto()+(avance * i))));
+//		}
 		
 	}
 	
@@ -114,7 +109,7 @@ public class PantallaMenu extends InputAdapter implements Screen {
 		
 		if(entradas.isEnter() || (entradas.isClick())) {
 			if(((opc==1) && (entradas.isEnter())) || ((opc==1) && (entradas.isClick())&&(mouseArriba))) {
-				Render.app.setScreen(new PantallaJuego());
+//				Render.app.setScreen(new PantallaJuego());
 			}else if(((opc==4) && (entradas.isEnter())) || ((opc==4) && (entradas.isClick())&&(mouseArriba))) {
 				Gdx.app.exit();
 			}
@@ -125,7 +120,7 @@ public class PantallaMenu extends InputAdapter implements Screen {
 	
 	@Override
 	public void resize(int width, int height) {
-		gamePort.update(width, height);
+//		gamePort.update(width, height);
 //		stage.getViewport().update(width, height, true); //se actualiza el stage si el userinterface cambia de tamaño
 	}
 
