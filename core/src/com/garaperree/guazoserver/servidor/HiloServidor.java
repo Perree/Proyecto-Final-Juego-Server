@@ -40,30 +40,17 @@ public class HiloServidor extends Thread{
 	private void procesarMensaje(DatagramPacket dp) { 
 		String msg = (new String(dp.getData())).trim(); 
 		System.out.println("Mensaje = "+ msg);
-//		int nroCliente = -1;
-//		
-//		if(cantClientes>1) {
-//			for (int i = 0; i < clientes.length; i++) {
-//				if(dp.getPort()==clientes[i].getPuerto() && dp.getAddress().equals(clientes[i].getIp())) {
-//					nroCliente=i;
-//				}
-//			}
-//		}
 		
-		if(cantClientes<2) {
 			if(msg.equals("Conexion")) {
 				System.out.println("Llega msg conexion cliente " + cantClientes);
 				if(cantClientes<2) {
 					this.clientes[cantClientes] = new DireccionRed(dp.getAddress(), dp.getPort());
 					enviarMensaje("ConexionAceptada"+(cantClientes+1), dp.getAddress(), dp.getPort());
-					cantClientes++;
+					cantClientes++;  
 //					enviarMensaje("Ok"+(nroCliente+1), clientes[cantClientes].getIp(), clientes[cantClientes++].getPuerto());
 					if(cantClientes==2) {
 						Utiles.listener.empieza();
-						for(int i = 0; i < clientes.length; i++) {
-							enviarMensajeATodos("Empieza");
-//							enviarMensaje("Empieza", clientes[i].getIp(), clientes[i].getPuerto());
-						}
+						enviarMensajeATodos("Empieza");
 					}
 				} 
 			} 
@@ -95,7 +82,6 @@ public class HiloServidor extends Thread{
 					Utiles.listener.soltoTecla(nroPlayer, "Derecha");
 				}
 			}
-		} 
 //		else {
 //			if(nroCliente!=-1) {
 //				if (msg.equals("ApreteArriba")){
@@ -178,6 +164,7 @@ public class HiloServidor extends Thread{
 	public void enviarMensajeATodos(String msg) {
 		for (int i = 0; i < clientes.length; i++) {
 			enviarMensaje(msg, clientes[i].getIp(), clientes[i].getPuerto());
+			System.out.println(clientes[i]+" Recibio mensaje");
 		}
 	}
 
