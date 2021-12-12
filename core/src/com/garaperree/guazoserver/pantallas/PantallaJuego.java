@@ -34,10 +34,8 @@ public class PantallaJuego implements Screen, JuegoEventListener{
 	
 	// Red
 	private Servidor servidor;
-//	private HiloServidor hs;
 	
 	// Booleanos para la red
-	public boolean isRight1=false, isUp1=false, isRight2=false, isUp2=false, isLeft1=false, isLeft2=false;
 	private boolean empieza = false;
 	
 	// Diseños
@@ -47,7 +45,7 @@ public class PantallaJuego implements Screen, JuegoEventListener{
 	private OrthographicCamera gamecam;
 	private Viewport gamePort;
 	
-	// Overlays lo CAMBIE A PRIVADO !!GUARDA!!
+	// Overlays
 	private Hud hud;
 	
 	// Variables del Tiled map
@@ -107,8 +105,6 @@ public class PantallaJuego implements Screen, JuegoEventListener{
 		
 		// Hilo Servidor 
 		servidor = new Servidor();
-//		hs = new HiloServidor();
-//		hs.start();
 		
 		world.setContactListener(new WorldContactListener());		
 	}
@@ -149,31 +145,6 @@ public class PantallaJuego implements Screen, JuegoEventListener{
 			jugador2.right();
 			servidor.enviarATodos("coordenadas!p2!"+jugador2.getX());
 		}
-		
-//		if(isUp1) {
-//			System.out.print("Jugador 1 Salta");
-//			jugador1.jump();
-//		} else if(isUp2) {
-//			System.out.print("Jugador 2 Salta");
-//			jugador2.jump();
-//		} 
-//		
-//		if(isRight1) {
-//			System.out.print("Jugador 1 Derecha");
-//			jugador1.right();
-//		} else if(isRight2) {
-//			System.out.print("Jugador 2 Derecha");
-//			jugador2.right();
-//		}
-//		
-//		if(isLeft1) {
-//			System.out.print("Jugador 1 Izquierda");
-//			jugador1.left();
-//		} else if(isLeft2) {
-//			System.out.print("Jugador 2 Izquierda");
-//			jugador2.left();
-//		}
-		
 		// controlar a nuestro jugador mediante impulsos
 //		if(jugador1.currentState != Fumiko.State.DEAD) {
 //			if(Gdx.input.isKeyJustPressed(Input.Keys.UP))
@@ -184,17 +155,6 @@ public class PantallaJuego implements Screen, JuegoEventListener{
 //			
 //			if(Gdx.input.isKeyPressed(Input.Keys.LEFT) && jugador1.b2body.getLinearVelocity().x >=-2)
 //				jugador1.b2body.applyLinearImpulse(new Vector2(-0.1f, 0),jugador1.b2body.getWorldCenter(), true);
-//		}
-		
-//		if(jugador2.currentState != Fumiko.State.DEAD) {
-//			if(Gdx.input.isKeyJustPressed(Input.Keys.W))
-//				jugador2.jump();
-//			
-//			if(Gdx.input.isKeyPressed(Input.Keys.D) && jugador2.b2body.getLinearVelocity().x <=2)
-//				jugador2.b2body.applyLinearImpulse(new Vector2(0.1f, 0),jugador2.b2body.getWorldCenter(), true);
-//			
-//			if(Gdx.input.isKeyPressed(Input.Keys.A) && jugador2.b2body.getLinearVelocity().x >=-2)
-//				jugador2.b2body.applyLinearImpulse(new Vector2(-0.1f, 0),jugador2.b2body.getWorldCenter(), true);
 //		}
 	}
 	
@@ -409,17 +369,6 @@ public class PantallaJuego implements Screen, JuegoEventListener{
 		this.empieza = true;
 	}
 
-
-	@Override
-	public void keyUp(int keycode) {	
-	}
-
-
-	@Override
-	public void keyDown(int keycode) {
-	}
-
-
 	@Override
 	public void apretoTecla(int nroPlayer, String tecla) {
 		if(nroPlayer==1) {
@@ -467,7 +416,6 @@ public class PantallaJuego implements Screen, JuegoEventListener{
 		} else {
 			if(tecla.equals("Arriba")) {
 				jugador2.mueveArriba=false;
-				
 			}
 			
 			if(tecla.equals("Izquierda")) {

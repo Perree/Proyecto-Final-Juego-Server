@@ -86,58 +86,6 @@ public class HiloServidor extends Thread{
 					Utiles.listener.soltoTecla(nroPlayer, "Derecha");
 				}
 			}
-//		else {
-//			if(nroCliente!=-1) {
-//				if (msg.equals("ApreteArriba")){
-//					System.out.println("probando");
-//					if(nroCliente==0) {
-//						System.out.println("llega apreto arriba");
-////						app.isUp1 = true;
-//					} else {
-//						System.out.println("llega apreto arriba");
-////						app.isUp2 = true; 
-//					}
-//					
-//				} else if(msg.equals("ApreteDerecha")) {
-//					if(nroCliente==0) {
-////						app.isRight1 = true;
-//					} else {
-////						app.isRight2 = true;
-//					}
-//					
-//				} else if(msg.equals("ApreteIzquierda")) {
-//					if(nroCliente==0) {
-////						app.isLeft1 = true;
-//					} else {
-////						app.isLeft2 = true;
-//					}	
-//				}
-//				
-//				else if(msg.equals("NoApreteIzquierda")) {
-//					if(nroCliente==0) {
-////						app.isLeft1 = false;
-//					} else {
-////						app.isLeft2 = false;
-//					}	
-//				}
-//			
-//				else if(msg.equals("NoApreteDerecha")) {
-//					if(nroCliente==0) {
-////						app.isRight1 = false;
-//					} else {
-////						app.isRight2 = false;
-//					}
-//				} 
-//				
-//				else if (msg.equals("NoApreteArriba")){
-//					if(nroCliente==0) {
-////						app.isUp1 = false;
-//					} else {
-////						app.isUp2 = false;
-//					}
-//				}
-//			} 
-//		}
 	}
 	
 	private int obtenerNroPlayer(InetAddress address, int port) {
