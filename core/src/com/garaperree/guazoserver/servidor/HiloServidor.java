@@ -69,7 +69,6 @@ public class HiloServidor extends Thread{
 			} 
 		} else {
 			if(nroCliente!=-1) {
-				System.out.println("Entre aca para moverme");
 				if (msg.equals("ApreteArriba")){
 					System.out.println("probando");
 					if(nroCliente==0) {
@@ -135,6 +134,7 @@ public class HiloServidor extends Thread{
 	public void enviarMensajeATodos(String msg) {
 		for (int i = 0; i < clientes.length; i++) {
 			enviarMensaje(msg, clientes[i].getIp(), clientes[i].getPuerto());
+			System.out.println(clientes[i]+" Recibio mensaje");
 		}
 	}
 

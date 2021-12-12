@@ -176,8 +176,6 @@ public class PantallaJuego implements Screen{
 		jugador2.update(dt);
 		hud.update(dt);
 		
-//		hs.enviarMensajeATodos("Actualizar!P1!"+jugador1.getY());
-		
 		jugadorGanaMuere();
 		
 		//Sigue la camara del jugador (no lo necesitamos)
@@ -278,6 +276,10 @@ public class PantallaJuego implements Screen{
 			jugador1.draw(game.batch);
 			jugador2.draw(game.batch);
 			game.batch.end();
+			
+//			+"!P2!"+jugador2.getY()
+			hs.enviarMensajeATodos("Actualizar!P1!"+jugador1.getY());
+			
 			
 			// Setea el batch para dibujar el hud
 			game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
