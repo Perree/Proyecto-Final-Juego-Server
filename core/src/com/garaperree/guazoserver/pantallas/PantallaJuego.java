@@ -39,7 +39,7 @@ public class PantallaJuego implements Screen, JuegoEventListener{
 	private boolean empieza = false;
 	
 	// Diseños
-	Texto espera;
+	private Texto espera;
 	
 	// Control de camara
 	private OrthographicCamera gamecam;

@@ -10,6 +10,6 @@ public class Servidor {
 		}
 	
 		public void enviarATodos(String msg) {
-			hiloServidor.enviarMensajeATodos(msg);
+			hiloServidor.enviarATodos(msg);
 		}
 }

@@ -49,12 +49,12 @@ public class HiloServidor extends Thread{
 				
 				if(cantClientes<2) {
 					this.clientes[cantClientes] = new DireccionRed(dp.getAddress(), dp.getPort());
-					enviarMensaje("ConexionAceptada"+(cantClientes+1), dp.getAddress(), dp.getPort());
+					enviarMensaje("ConexionAceptada!"+(cantClientes+1), dp.getAddress(), dp.getPort());
 					cantClientes++;  
 					
 					if(cantClientes==2) {
 						Utiles.listener.empezar();
-						enviarMensajeATodos("Empieza");
+						enviarATodos("Empieza");
 					}
 				} 
 			} 
@@ -113,7 +113,7 @@ public class HiloServidor extends Thread{
 		}
 	}
 	
-	public void enviarMensajeATodos(String msg) {
+	public void enviarATodos(String msg) {
 		for (int i = 0; i < clientes.length; i++) {
 			enviarMensaje(msg, clientes[i].getIp(), clientes[i].getPuerto());
 			System.out.println(clientes[i]+" Recibio mensaje");
