@@ -3,14 +3,13 @@ package com.garaperree.guazoserver.basura;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Assets {
 	public static BitmapFont font;
-	private static final GlyphLayout gl = new GlyphLayout(); // Conocer el tamaño del texto para centrar
+//	private static final GlyphLayout gl = new GlyphLayout(); // Conocer el tamaño del texto para centrar
 	
 	public static Animation<AtlasRegion> Cromo;
 	

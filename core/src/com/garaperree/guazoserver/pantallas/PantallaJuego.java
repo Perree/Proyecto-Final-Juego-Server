@@ -122,29 +122,51 @@ public class PantallaJuego implements Screen, JuegoEventListener{
 	private void handleInput(float dt) {
 		
 		if(jugador1.mueveArriba) {
-			if(jugador1.currentState != Fumiko.State.DEAD) jugador1.jump(); 
-			servidor.enviarATodos("coordenadas!p1!"+jugador1.getY()); // enviamos las coordenadas a los jugadores
+			if(jugador1.currentState != Fumiko.State.DEAD) {
+				jugador1.jump(); 
+				servidor.enviarATodos("coordenadas!p1!"+jugador1.getY()); // enviamos las coordenadas a los jugadores
+			}
 		}
+		
 		if(jugador1.mueveIzquierda) {
-			if (jugador1.b2body.getLinearVelocity().x >=-2 && jugador1.currentState != Fumiko.State.DEAD) jugador1.left();
-			servidor.enviarATodos("coordenadas!p1!"+jugador1.getX());
+			if (jugador1.b2body.getLinearVelocity().x >=-2 
+					&& jugador1.currentState != Fumiko.State.DEAD) {
+				jugador1.left();
+				servidor.enviarATodos("coordenadas!p1!"+jugador1.getX());
+			}
 		}
+		
 		if(jugador1.mueveDerecha) {
-			if (jugador1.b2body.getLinearVelocity().x <=2 && jugador1.currentState != Fumiko.State.DEAD) jugador1.right();
-			servidor.enviarATodos("coordenadas!p1!"+jugador1.getX());
+			if (jugador1.b2body.getLinearVelocity().x <=2 
+					&& jugador1.currentState != Fumiko.State.DEAD) {
+				jugador1.right();
+				servidor.enviarATodos("coordenadas!p1!"+jugador1.getX());
+			}
 		}
 		
 		if(jugador2.mueveArriba) {
-			if(jugador2.currentState != Fumiko.State.DEAD) jugador2.jump();
-			servidor.enviarATodos("coordenadas!p2!"+jugador2.getY());
+			if(jugador2.currentState != Fumiko.State.DEAD) {
+				jugador2.jump();
+				servidor.enviarATodos("coordenadas!p2!"+jugador2.getY());
+			}
+			
 		}
+		
 		if(jugador2.mueveIzquierda) {
-			if (jugador2.b2body.getLinearVelocity().x >=-2 && jugador1.currentState != Fumiko.State.DEAD) jugador2.left();
-			servidor.enviarATodos("coordenadas!p2!"+jugador2.getX());
+			if (jugador2.b2body.getLinearVelocity().x >=-2 
+					&& jugador1.currentState != Fumiko.State.DEAD) {
+				jugador2.left();
+				servidor.enviarATodos("coordenadas!p2!"+jugador2.getX());
+			}
 		}
+		
 		if(jugador2.mueveDerecha) {
-			if (jugador2.b2body.getLinearVelocity().x <=2 && jugador2.currentState != Fumiko.State.DEAD) jugador2.right();
-			servidor.enviarATodos("coordenadas!p2!"+jugador2.getX());
+			if (jugador2.b2body.getLinearVelocity().x <=2 
+					&& jugador2.currentState != Fumiko.State.DEAD) {
+				jugador2.right();
+				servidor.enviarATodos("coordenadas!p2!"+jugador2.getX());
+			}
+			
 		}
 		
 		// controlar a nuestro jugador mediante impulsos
@@ -379,7 +401,7 @@ public class PantallaJuego implements Screen, JuegoEventListener{
 
 	@Override
 	public void empezar() {
-		this.empieza = true;
+		empieza = true;
 	}
 
 	@Override

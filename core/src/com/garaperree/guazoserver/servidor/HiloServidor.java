@@ -43,7 +43,7 @@ public class HiloServidor extends Thread{
 		
 		System.out.println("Mensaje = "+ msg);
 		
-			if(msg.equals("Conexion")) {
+			if(msg.equals("Conexion")) { 
 				
 				System.out.println("Llega msg conexion cliente " + cantClientes);
 				
@@ -57,10 +57,12 @@ public class HiloServidor extends Thread{
 						enviarATodos("Empieza");
 					}
 				} 
-			} 
+			}  
 			
 			if(cantClientes==2) {
 				int nroPlayer = obtenerNroPlayer(dp.getAddress(), dp.getPort());
+				
+				System.out.println(nroPlayer);
 				
 				if(msg.equals("ApretoArriba")) {
 					Utiles.listener.apretoTecla(nroPlayer, "Arriba");

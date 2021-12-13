@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.garaperree.guazoserver.GuazoServer;
+import com.garaperree.guazoserver.servidor.Servidor;
 
 public class Hud implements Disposable{
 	// Stage maneja la ventana gráfica (Viewport) y distribuye los eventos de entrada.
@@ -18,6 +19,8 @@ public class Hud implements Disposable{
 	
 	// Administra una cámara y determina cómo se asignan las coordenadas mundiales hacia y desde la pantalla.
 	private Viewport viewport; 
+	
+	private Servidor servidor;
 	
 	// Marcadores y tiempos
 	private Integer worldTimer;
@@ -74,6 +77,7 @@ public class Hud implements Disposable{
             }
             countdownLabel.setText(String.format("%02d", worldTimer));
             timeCount = 0;
+//            servidor.enviarATodos("actualizarTiempo");
         }
 	}
 

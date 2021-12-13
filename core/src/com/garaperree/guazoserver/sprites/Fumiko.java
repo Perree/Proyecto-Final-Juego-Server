@@ -20,7 +20,7 @@ public class Fumiko extends Sprite{
 	
 	public boolean fin = false;
 	public boolean mueveArriba, mueveIzquierda, mueveDerecha;
-	
+
 	public State currentState;
 	public State previousState;
 	
@@ -220,4 +220,5 @@ public class Fumiko extends Sprite{
 	public boolean isDead() {
 		return fumikoIsDead;
 	}
+
 }

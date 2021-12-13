@@ -33,7 +33,7 @@ public class PantallaMenu extends InputAdapter implements Screen {
 		
 		
 		Gdx.input.setInputProcessor(entradas);
-		int avance = 50;
+//		int avance = 50;
 		
 		
 
