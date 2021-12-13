@@ -126,7 +126,7 @@ public class PantallaJuego implements Screen, JuegoEventListener{
 		if(jugador1.mueveArriba) {
 			if(jugador1.currentState != Fumiko.State.DEAD) {
 				jugador1.jump(); 
-				servidor.enviarATodos("Acciones!p1!saltar");
+//				servidor.enviarATodos("Acciones!p1!saltar");
 //				servidor.enviarATodos("coordenadas!p1!"+jugador1.getY()); // enviamos las coordenadas a los jugadores
 			}
 		}
@@ -135,7 +135,7 @@ public class PantallaJuego implements Screen, JuegoEventListener{
 			if (jugador1.b2body.getLinearVelocity().x >=-2 
 					&& jugador1.currentState != Fumiko.State.DEAD) {
 				jugador1.left();
-				servidor.enviarATodos("Acciones!p1!izquierda");
+//				servidor.enviarATodos("Acciones!p1!izquierda");
 //				servidor.enviarATodos("coordenadas!p1!"+jugador1.getX());
 			}
 		}
@@ -144,7 +144,7 @@ public class PantallaJuego implements Screen, JuegoEventListener{
 			if (jugador1.b2body.getLinearVelocity().x <=2 
 					&& jugador1.currentState != Fumiko.State.DEAD) {
 				jugador1.right();
-				servidor.enviarATodos("Acciones!p1!derecha");
+//				servidor.enviarATodos("Acciones!p1!derecha");
 //				servidor.enviarATodos("coordenadas!p1!"+jugador1.getX());
 			}
 		}
@@ -152,7 +152,7 @@ public class PantallaJuego implements Screen, JuegoEventListener{
 		if(jugador2.mueveArriba) {
 			if(jugador2.currentState != Fumiko.State.DEAD) {
 				jugador2.jump();
-				servidor.enviarATodos("Acciones!p2!saltar");
+//				servidor.enviarATodos("Acciones!p2!saltar");
 //				servidor.enviarATodos("coordenadas!p2!"+jugador2.getY());
 			}
 			
@@ -162,7 +162,7 @@ public class PantallaJuego implements Screen, JuegoEventListener{
 			if (jugador2.b2body.getLinearVelocity().x >=-2 
 					&& jugador1.currentState != Fumiko.State.DEAD) {
 				jugador2.left();
-				servidor.enviarATodos("Acciones!p2!izquierda");
+//				servidor.enviarATodos("Acciones!p2!izquierda");
 //				servidor.enviarATodos("coordenadas!p2!"+jugador2.getX());
 			}
 		}
@@ -171,7 +171,7 @@ public class PantallaJuego implements Screen, JuegoEventListener{
 			if (jugador2.b2body.getLinearVelocity().x <=2 
 					&& jugador2.currentState != Fumiko.State.DEAD) {
 				jugador2.right();
-				servidor.enviarATodos("Acciones!p2!derecha");
+//				servidor.enviarATodos("Acciones!p2!derecha");
 //				servidor.enviarATodos("coordenadas!p2!"+jugador2.getX());
 			}
 		}
@@ -286,6 +286,9 @@ public class PantallaJuego implements Screen, JuegoEventListener{
 		}else {
 			// Separa la actualizacion logica del renderizado
 			update(delta);
+			
+			servidor.enviarATodos("actualizarPos!1!"+jugador1.getX()+"!"+jugador1.getY());
+			servidor.enviarATodos("actualizarPos!2!"+jugador2.getX()+"!"+jugador2.getY());
 			
 			// Limpiar pantalla con negro
 			Gdx.gl.glClearColor(0, 0, 0, 1);
