@@ -122,29 +122,31 @@ public class PantallaJuego implements Screen, JuegoEventListener{
 	private void handleInput(float dt) {
 		
 		if(jugador1.mueveArriba) {
-			jugador1.jump(); // Evitamos un poco el retraso
+			if(jugador1.currentState != Fumiko.State.DEAD) jugador1.jump(); 
 			servidor.enviarATodos("coordenadas!p1!"+jugador1.getY()); // enviamos las coordenadas a los jugadores
 		}
 		if(jugador1.mueveIzquierda) {
-			jugador1.left();
+			if (jugador1.b2body.getLinearVelocity().x >=-2 && jugador1.currentState != Fumiko.State.DEAD) jugador1.left();
 			servidor.enviarATodos("coordenadas!p1!"+jugador1.getX());
 		}
 		if(jugador1.mueveDerecha) {
-			jugador1.right();
+			if (jugador1.b2body.getLinearVelocity().x <=2 && jugador1.currentState != Fumiko.State.DEAD) jugador1.right();
 			servidor.enviarATodos("coordenadas!p1!"+jugador1.getX());
 		}
+		
 		if(jugador2.mueveArriba) {
-			jugador2.jump();
+			if(jugador2.currentState != Fumiko.State.DEAD) jugador2.jump();
 			servidor.enviarATodos("coordenadas!p2!"+jugador2.getY());
 		}
 		if(jugador2.mueveIzquierda) {
-			jugador2.left();
+			if (jugador2.b2body.getLinearVelocity().x >=-2 && jugador1.currentState != Fumiko.State.DEAD) jugador2.left();
 			servidor.enviarATodos("coordenadas!p2!"+jugador2.getX());
 		}
 		if(jugador2.mueveDerecha) {
-			jugador2.right();
+			if (jugador2.b2body.getLinearVelocity().x <=2 && jugador2.currentState != Fumiko.State.DEAD) jugador2.right();
 			servidor.enviarATodos("coordenadas!p2!"+jugador2.getX());
 		}
+		
 		// controlar a nuestro jugador mediante impulsos
 //		if(jugador1.currentState != Fumiko.State.DEAD) {
 //			if(Gdx.input.isKeyJustPressed(Input.Keys.UP))
@@ -210,6 +212,7 @@ public class PantallaJuego implements Screen, JuegoEventListener{
 		if ((jugador1.getX() <= 1.64f && jugador1.getY() >= 1.46f) &&
 				(jugador1.getX() >= 1.32f && jugador1.getY() <= 1.6f)) {
 			jugador1.llegoSalida();
+			servidor.enviarATodos("termino!1");
 		}
 		
 		//Cuando el personaje se cae en la lava
@@ -239,6 +242,7 @@ public class PantallaJuego implements Screen, JuegoEventListener{
 		if ((jugador2.getX() <= 1.64f && jugador2.getY() >= 1.46f) &&
 				(jugador2.getX() >= 1.32f && jugador2.getY() <= 1.6f)) {
 			jugador2.llegoSalida();
+			servidor.enviarATodos("termino!2");
 		}	
 	}
 
@@ -276,43 +280,52 @@ public class PantallaJuego implements Screen, JuegoEventListener{
 			
 			// Si el tiempo se acaba, se termina el juego
 			if(hud.getWorldTimer()==0) {
-				finishing();
+				acaboTiempo();
 			}
 			
 			// Llego a la meta GANO!
 			if(jugador1.isPuedeSalir()) {
-				String nombre = "Jugador 1";
-				finishing(nombre);
+				ganadorJugador();
 			}
 			
 			// Llego a la meta GANO!
 			if(jugador2.isPuedeSalir()) {
-				String nombre = "Jugador 2";
-				finishing(nombre);
+				ganadorJugador();
 			}
 			
 			// El personaje perdio
 			if(FinJuego()) {
-				finishing();
+				perdedor();
 			}
 		}
 	}
+	
+	// Se termino el tiempo
+	public void acaboTiempo() {
+		servidor.enviarATodos("acaboTiempo");
+		game.setScreen(new AcaboTiempo(game));
+		dispose();
+	}
 
-	public void finishing() {
+	// Un jugador ha muerto y por lo tanto ha ganado el otro
+	public void perdedor() {
+		game.setScreen(new PerdioJuego(game));
+		dispose();
+	}
+	
+	// Un jugador ha ganado
+	public void ganadorJugador() {
 		game.setScreen(new FinDelJuego(game));
 		dispose();
 	}
 	
-	public void finishing(String nombre) {
-		game.setScreen(new FinDelJuego(game, nombre));
-		dispose();
-	}
-	
-	// Se corrobora que si el estado del jugador esta muerto y el tiempo
+	// Se corrobora que si el estado del jugador esta muerto
 	public boolean FinJuego() {
 		if (jugador1.currentState == Fumiko.State.DEAD) {
+			servidor.enviarATodos("termino!2");
 			return true;
 		}else if (jugador2.currentState == Fumiko.State.DEAD){
+			servidor.enviarATodos("termino!1");
 			return true;
 		}
 		return false;

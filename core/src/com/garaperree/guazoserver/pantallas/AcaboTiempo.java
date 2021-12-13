@@ -14,12 +14,12 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.garaperree.guazoserver.GuazoServer;
 
-public class FinDelJuego implements Screen{
+public class AcaboTiempo implements Screen{
 	private Viewport viewport;
 	private Stage stage;
 	private Game game; 
 	
-	public FinDelJuego(Game game) {
+	public AcaboTiempo (Game game) {
 		this.game = game;
 		viewport = new FitViewport(GuazoServer.V_WIDTH, GuazoServer.V_HEIGHT, new OrthographicCamera());
 		stage = new Stage(viewport, ((GuazoServer) game).batch);
@@ -31,44 +31,21 @@ public class FinDelJuego implements Screen{
 		table.setFillParent(true);
 		
 		Label finJuegoLabel = new Label("FIN DEL JUEGO", font);
-		Label quienGano = new Label("Has ganado!", font);
+		Label algunoPerdio = new Label("Se ha acabado el tiempo", font);
 		Label juegarDeNuevoLabel = new Label("Haz click en cualquier parte de la pantalla para iniciar de vuelta", font);
 		
 		table.add(finJuegoLabel).expandX();
 		table.row();
-		table.add(quienGano).expandX().padTop(10f);
+		table.add(algunoPerdio).expandX();
 		table.row();
 		table.add(juegarDeNuevoLabel).expandX().padTop(10f);
 		
 		stage.addActor(table);
 	}
-	
-//	public FinDelJuego(Game game) {
-//		this.game = game;
-//		viewport = new FitViewport(GuazoServer.V_WIDTH, GuazoServer.V_HEIGHT, new OrthographicCamera());
-//		stage = new Stage(viewport, ((GuazoServer) game).batch);
-//		
-//		Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
-//		
-//		Table table = new Table();
-//		table.center();
-//		table.setFillParent(true);
-//		
-//		Label finJuegoLabel = new Label("FIN DEL JUEGO", font);
-//		Label algunoPerdio = new Label("El jugador "+nombre+ " ha perdido"+ " el jugador "+nombreGanador+ " ha ganado", font);
-//		Label juegarDeNuevoLabel = new Label("Haz click en cualquier parte de la pantalla para iniciar de vuelta", font);
-//		
-//		table.add(finJuegoLabel).expandX();
-//		table.row();
-//		table.add(algunoPerdio).expandX();
-//		table.row();
-//		table.add(juegarDeNuevoLabel).expandX().padTop(10f);
-//		
-//		stage.addActor(table);
-//	}
 
 	@Override
 	public void show() {
+		
 	}
 
 	@Override
@@ -92,7 +69,7 @@ public class FinDelJuego implements Screen{
 	}
 
 	@Override
-	public void resume() {
+	public void resume() {		
 	}
 
 	@Override
@@ -103,5 +80,4 @@ public class FinDelJuego implements Screen{
 	public void dispose() {
 		stage.dispose();
 	}
-
 }
