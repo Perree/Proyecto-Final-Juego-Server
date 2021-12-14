@@ -13,14 +13,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.garaperree.guazoserver.GuazoServer;
+import com.garaperree.guazoserver.servidor.Servidor;
 
 public class PerdioJuego implements Screen{
 	private Viewport viewport;
 	private Stage stage;
 	private Game game; 
+	private Servidor servidor;
 	
-	public PerdioJuego (Game game) {
+	public PerdioJuego (Game game, Servidor servidor) {
 		this.game = game;
+		this.servidor = servidor;
 		viewport = new FitViewport(GuazoServer.V_WIDTH, GuazoServer.V_HEIGHT, new OrthographicCamera());
 		stage = new Stage(viewport, ((GuazoServer) game).batch);
 		
@@ -50,10 +53,10 @@ public class PerdioJuego implements Screen{
 
 	@Override
 	public void render(float delta) {
-		if(Gdx.input.justTouched()) {
-			game.setScreen(new PantallaJuego((GuazoServer) game));
-			dispose();
-		}
+//		if(Gdx.input.justTouched()) {		
+//			game.setScreen(new PantallaJuego((GuazoServer) game));
+//			dispose();
+//		}
 			
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

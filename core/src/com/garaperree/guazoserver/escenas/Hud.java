@@ -20,12 +20,12 @@ public class Hud implements Disposable{
 	// Administra una cámara y determina cómo se asignan las coordenadas mundiales hacia y desde la pantalla.
 	private Viewport viewport; 
 	
-	private Servidor servidor;
-	
 	// Marcadores y tiempos
 	private Integer worldTimer;
 	private static Integer nivel;
 	private float timeCount;
+	
+	private Servidor servidor;
 	
 	
 	// Scene2d widgets
@@ -76,8 +76,8 @@ public class Hud implements Disposable{
                 worldTimer--;
             }
             countdownLabel.setText(String.format("%02d", worldTimer));
+//            servidor.enviarATodos("tiempo!"+worldTimer);
             timeCount = 0;
-//            servidor.enviarATodos("actualizarTiempo");
         }
 	}
 	
