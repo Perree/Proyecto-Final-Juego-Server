@@ -115,10 +115,10 @@ public class HiloServidor extends Thread{
 		}
 	}
 	
+	// Envia mensaje a todos los clientes
 	public void enviarATodos(String msg) {
 		for (int i = 0; i < clientes.length; i++) {
 			enviarMensaje(msg, clientes[i].getIp(), clientes[i].getPuerto());
-			System.out.println(clientes[i]+" Recibio mensaje");
 		}
 	}
 

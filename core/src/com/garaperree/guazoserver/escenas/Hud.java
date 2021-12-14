@@ -11,7 +11,6 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.garaperree.guazoserver.GuazoServer;
-import com.garaperree.guazoserver.servidor.Servidor;
 
 public class Hud implements Disposable{
 	// Stage maneja la ventana gráfica (Viewport) y distribuye los eventos de entrada.
@@ -24,8 +23,6 @@ public class Hud implements Disposable{
 	private Integer worldTimer;
 	private static Integer nivel;
 	private float timeCount;
-	
-	private Servidor servidor;
 	
 	
 	// Scene2d widgets
@@ -76,7 +73,6 @@ public class Hud implements Disposable{
                 worldTimer--;
             }
             countdownLabel.setText(String.format("%02d", worldTimer));
-//            servidor.enviarATodos("tiempo!"+worldTimer);
             timeCount = 0;
         }
 	}

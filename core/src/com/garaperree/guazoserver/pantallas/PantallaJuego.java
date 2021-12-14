@@ -37,10 +37,9 @@ public class PantallaJuego implements Screen, JuegoEventListener {
 
 	// Booleanos para la red
 	private boolean empieza = false;
-	private boolean finJuego = false;
 
 	// Diseños
-	private Texto espera, resultado;
+	private Texto espera;
 
 	// Control de camara
 	private OrthographicCamera gamecam;
@@ -96,7 +95,6 @@ public class PantallaJuego implements Screen, JuegoEventListener {
 		new B2WorldCreator(this);
 
 		// Texto para la conexion
-		resultado = new Texto(Recursos.FUENTE,100,Color.WHITE,false);
 		espera = new Texto(Recursos.FUENTE, 100, Color.WHITE, false);
 		espera.setTexto("Esperando jugadores...");
 		espera.setPosition((GuazoServer.V_WIDTH / 2) - (espera.getAncho() / 2),
@@ -199,73 +197,73 @@ public class PantallaJuego implements Screen, JuegoEventListener {
 	private void jugadorGanaMuere() {
 		//Jugador 1
 		// Cuando el personaje se cae en la lava
-		if (jugador1.getY() < 0) {
-			finJuego = true;
-			resultado.setTexto("Perdiste");	
+		if (jugador1.getY() < 0) {	
 			servidor.enviarATodos("termino!1");
 //			jugador1.currentState = Fumiko.State.DEAD;
 		}
 
-//		// Pinches 1
-//		if ((jugador1.getX() > 2.42f && jugador1.getY() >= 4.50f)
-//				&& (jugador1.getX() <= 2.81f && jugador1.getY() <= 5.15f)) {
+		// Pinches 1
+		if ((jugador1.getX() > 2.42f && jugador1.getY() >= 4.50f)
+				&& (jugador1.getX() <= 2.81f && jugador1.getY() <= 5.15f)) {
+			servidor.enviarATodos("termino!1");
 //			jugador1.currentState = Fumiko.State.DEAD;
-//		}
-//
-//		// Pinches 2
-//		if ((jugador1.getX() >= 4.9895763 && jugador1.getY() >= 4.98f)
-//				&& (jugador1.getX() <= 6.335001 && jugador1.getY() <= 4.99f)) {
+		}
+
+		// Pinches 2
+		if ((jugador1.getX() >= 4.9895763 && jugador1.getY() >= 4.98f)
+				&& (jugador1.getX() <= 6.335001 && jugador1.getY() <= 4.99f)) {
+			servidor.enviarATodos("termino!1");
 //			jugador1.currentState = Fumiko.State.DEAD;
-//		}
-//
-//		// Pinches 3
-//		if ((jugador1.getX() >= 5.12f && jugador1.getY() <= 1.5f)
-//				&& (jugador1.getX() <= 5.55f && jugador1.getY() >= 1.46f)) {
+		}
+
+		// Pinches 3
+		if ((jugador1.getX() >= 5.12f && jugador1.getY() <= 1.5f)
+				&& (jugador1.getX() <= 5.55f && jugador1.getY() >= 1.46f)) {
+			servidor.enviarATodos("termino!1");
 //			jugador1.currentState = Fumiko.State.DEAD;
-//		}
-//
-//		// Usamos la ubicacion del personaje para poder determinar la meta
-//		if ((jugador1.getX() <= 1.64f && jugador1.getY() >= 1.46f)
-//				&& (jugador1.getX() >= 1.32f && jugador1.getY() <= 1.6f)) {
+		}
+
+		// Usamos la ubicacion del personaje para poder determinar la meta
+		if ((jugador1.getX() <= 1.64f && jugador1.getY() >= 1.46f)
+				&& (jugador1.getX() >= 1.32f && jugador1.getY() <= 1.6f)) {
+			servidor.enviarATodos("finalizoCarrera!1");
 //			jugador1.llegoSalida();
-//		}
+		}
 		
 		//Jugador 2
 		// Cuando el personaje se cae en la lava
 		if (jugador2.getY() < 0) {
-			finJuego = true;
-			resultado.setTexto("Perdiste");
 			servidor.enviarATodos("termino!2");
 //			jugador2.currentState = Fumiko.State.DEAD;
 			
 		}
 
 //		// Pinches 1
-//		if ((jugador2.getX() > 2.42f && jugador2.getY() >= 4.50f)
-//				&& (jugador2.getX() <= 2.81f && jugador2.getY() <= 5.15f)) {
+		if ((jugador2.getX() > 2.42f && jugador2.getY() >= 4.50f)
+				&& (jugador2.getX() <= 2.81f && jugador2.getY() <= 5.15f)) {
+			servidor.enviarATodos("termino!2");
 //			jugador2.currentState = Fumiko.State.DEAD;
-//		}
-//
-//		// Pinches 2
-//		if ((jugador2.getX() >= 4.9895763 && jugador2.getY() >= 4.98f)
-//				&& (jugador2.getX() <= 6.335001 && jugador2.getY() <= 4.99f)) {
+		}
+
+		// Pinches 2
+		if ((jugador2.getX() >= 4.9895763 && jugador2.getY() >= 4.98f)
+				&& (jugador2.getX() <= 6.335001 && jugador2.getY() <= 4.99f)) {
+			servidor.enviarATodos("termino!2");
 //			jugador2.currentState = Fumiko.State.DEAD;
-//		}
-//
-//		// Pinches 3
-//		if ((jugador2.getX() >= 5.12f && jugador2.getY() <= 1.5f)
-//				&& (jugador2.getX() <= 5.55f && jugador2.getY() >= 1.46f)) {
+		}
+
+		// Pinches 3
+		if ((jugador2.getX() >= 5.12f && jugador2.getY() <= 1.5f)
+				&& (jugador2.getX() <= 5.55f && jugador2.getY() >= 1.46f)) {
+			servidor.enviarATodos("termino!2");
 //			jugador2.currentState = Fumiko.State.DEAD;
-//		}
-//
-//		// Usamos la ubicacion del personaje para poder determinar la meta
-//		if ((jugador2.getX() <= 1.64f && jugador2.getY() >= 1.46f)
-//				&& (jugador2.getX() >= 1.32f && jugador2.getY() <= 1.6f)) {
+		}
+
+		// Usamos la ubicacion del personaje para poder determinar la meta
+		if ((jugador2.getX() <= 1.64f && jugador2.getY() >= 1.46f)
+				&& (jugador2.getX() >= 1.32f && jugador2.getY() <= 1.6f)) {
+			servidor.enviarATodos("finalizoCarrera!2");
 //			jugador2.llegoSalida();
-//		}
-		
-		if(finJuego) {
-			resultado.setPosition((GuazoServer.V_WIDTH / 2) - (resultado.getAncho() / 2),(GuazoServer.V_HEIGHT / 2) + (resultado.getAlto() / 2));
 		}
 	}
 
@@ -303,18 +301,11 @@ public class PantallaJuego implements Screen, JuegoEventListener {
 			// Setea el batch para dibujar el hud
 			game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
 			hud.stage.draw();
-
-			if(finJuego) {
-				Render.limpiarPantalla();
-				Render.begin();
-				resultado.dibujar();
-				Render.end();
-			}
 			
 			// Si el tiempo se acaba, se termina el juego
-//			if (hud.getWorldTimer() == 0) {
-//				acaboTiempo();
-//			}
+			if (hud.getWorldTimer() == 0) {
+				servidor.enviarATodos(null);
+			}
 
 			// Llego a la meta GANO!
 //			if (jugador1.isPuedeSalir()) {
