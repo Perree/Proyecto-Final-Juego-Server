@@ -80,7 +80,7 @@ public class Hud implements Disposable{
 //            servidor.enviarATodos("actualizarTiempo");
         }
 	}
-
+	
 	@Override
 	public void dispose() {
 		stage.dispose();	

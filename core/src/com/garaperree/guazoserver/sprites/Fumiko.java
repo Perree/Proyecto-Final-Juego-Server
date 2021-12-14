@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.garaperree.guazoserver.GuazoServer;
 import com.garaperree.guazoserver.pantallas.PantallaJuego;
+import com.garaperree.guazoserver.servidor.Servidor;
 
 public class Fumiko extends Sprite{
 	
@@ -33,12 +34,17 @@ public class Fumiko extends Sprite{
 	
 	private float stateTimer;
 	
+	private Servidor servidor;
+	
+	private int nroJugador;
+	
 	private boolean runningRight;
 	private boolean fumikoIsDead;
 	
-	public Fumiko(PantallaJuego screen) {
+	public Fumiko(PantallaJuego screen, int nroJugador, Servidor servidor) {
 		super(screen.getAtlas().findRegion("fumiko"));
-
+		this.nroJugador = nroJugador;
+		this.servidor = servidor;
 		this.world = screen.getWorld();
 //		currentState = State.STANDING;
 //		previousState = State.STANDING;
@@ -74,11 +80,35 @@ public class Fumiko extends Sprite{
 //		setRegion(fumikoStand);
 	}
 	
+	// Con este metodo sabemos que esta haciendo el jugador (correr, saltar, etc)
+	public State getState() {
+
+		if(fumikoIsDead) 
+			return State.DEAD;
+		
+		if(b2body.getLinearVelocity().y > 0 || (b2body.getLinearVelocity().y < 0 && previousState == State.JUMPING))
+			return State.JUMPING;
+		
+		else if(b2body.getLinearVelocity().y < 0) 
+			return State.FALLING;
+		
+		else if(b2body.getLinearVelocity().x != 0)
+			return State.RUNNING;
+		
+		else
+			return State.STANDING;
+	}
+	
 	// Se va actualizando la posicion del personaje
 	public void update(float dt) {
 		setPosition(b2body.getPosition().x - getWidth() /2,b2body.getPosition().y - getHeight() /2);
 		this.setOriginCenter();
 		setRegion(getFrame(dt));
+		if(nroJugador==1) {
+			servidor.enviarATodos("Animacion!1!"+ getState());
+		}else {
+			servidor.enviarATodos("Animacion!2!"+ getState());
+		}
 	}
 	
 	// Obtenego el frame exacto dependiendo lo que el jugador este haciendo
@@ -94,9 +124,6 @@ public class Fumiko extends Sprite{
 		case RUNNING:
 			region = (TextureRegion) fumikoRun.getKeyFrame(stateTimer, true);
 			break;
-			
-//		case FALLING:
-//		case STANDING:
 			
 		default:
 			region = (TextureRegion) fumikoStand.getKeyFrame(stateTimer);
@@ -117,25 +144,6 @@ public class Fumiko extends Sprite{
 		previousState = currentState;
 		return region;
 		
-	}
-	
-	// Con este metodo sabemos que esta haciendo el jugador (correr, saltar, etc)
-	public State getState() {
-
-		if(fumikoIsDead) 
-			return State.DEAD;
-		
-		if(b2body.getLinearVelocity().y > 0 || (b2body.getLinearVelocity().y < 0 && previousState == State.JUMPING))
-			return State.JUMPING;
-		
-//		else if(b2body.getLinearVelocity().y < 0) 
-//			return State.FALLING;
-		
-		else if(b2body.getLinearVelocity().x != 0)
-			return State.RUNNING;
-		
-		else
-			return State.STANDING;
 	}
 	
 	public void jump(){

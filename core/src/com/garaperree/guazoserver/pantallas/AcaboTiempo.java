@@ -13,11 +13,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.garaperree.guazoserver.GuazoServer;
+import com.garaperree.guazoserver.servidor.Servidor;
 
 public class AcaboTiempo implements Screen{
 	private Viewport viewport;
 	private Stage stage;
 	private Game game; 
+	private Servidor servidor;
 	
 	public AcaboTiempo (Game game) {
 		this.game = game;
@@ -45,11 +47,11 @@ public class AcaboTiempo implements Screen{
 
 	@Override
 	public void show() {
-		
 	}
 
 	@Override
 	public void render(float delta) {
+		servidor.enviarATodos("terminoTiempo");
 		if(Gdx.input.justTouched()) {
 			game.setScreen(new PantallaJuego((GuazoServer) game));
 			dispose();
