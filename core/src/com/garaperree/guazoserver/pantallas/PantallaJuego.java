@@ -187,7 +187,8 @@ public class PantallaJuego implements Screen, JuegoEventListener {
 
 		jugadorGanaMuere();
 
-		// actualiza la camara del juego con las coordenadas correctas despues de hacer los cambios
+		// actualiza la camara del juego con las coordenadas correctas despues de hacer
+		// los cambios
 		gamecam.update();
 
 		// renderiza lo que la camara puede ver
@@ -195,9 +196,9 @@ public class PantallaJuego implements Screen, JuegoEventListener {
 	}
 
 	private void jugadorGanaMuere() {
-		//Jugador 1
+		// Jugador 1
 		// Cuando el personaje se cae en la lava
-		if (jugador1.getY() < 0) {	
+		if (jugador1.getY() < 0) {
 			servidor.enviarATodos("termino!1");
 //			jugador1.currentState = Fumiko.State.DEAD;
 		}
@@ -229,13 +230,13 @@ public class PantallaJuego implements Screen, JuegoEventListener {
 			servidor.enviarATodos("finalizoCarrera!1");
 //			jugador1.llegoSalida();
 		}
-		
-		//Jugador 2
+
+		// Jugador 2
 		// Cuando el personaje se cae en la lava
 		if (jugador2.getY() < 0) {
 			servidor.enviarATodos("termino!2");
 //			jugador2.currentState = Fumiko.State.DEAD;
-			
+
 		}
 
 //		// Pinches 1
@@ -301,10 +302,10 @@ public class PantallaJuego implements Screen, JuegoEventListener {
 			// Setea el batch para dibujar el hud
 			game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
 			hud.stage.draw();
-			
+
 			// Si el tiempo se acaba, se termina el juego
 			if (hud.getWorldTimer() == 0) {
-				servidor.enviarATodos(null);
+				servidor.enviarATodos("seAcaboTiempoBrother");
 			}
 
 			// Llego a la meta GANO!

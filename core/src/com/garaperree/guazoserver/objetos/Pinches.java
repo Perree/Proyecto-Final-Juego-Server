@@ -5,7 +5,7 @@ import com.garaperree.guazoserver.GuazoServer;
 import com.garaperree.guazoserver.pantallas.PantallaJuego;
 import com.garaperree.guazoserver.sprites.Fumiko;
 
-public class Pinches extends ObjetosInteractivos{
+public class Pinches extends ObjetosInteractivos {
 
 	public Pinches(PantallaJuego screen, MapObject object) {
 		super(screen, object);

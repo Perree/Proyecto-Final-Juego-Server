@@ -14,32 +14,33 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.garaperree.guazoserver.GuazoServer;
 
-public class AcaboTiempo implements Screen{
+public class AcaboTiempo implements Screen {
 	private Viewport viewport;
 	private Stage stage;
-	private Game game; 
-	
-	public AcaboTiempo (Game game) {
+	private Game game;
+
+	public AcaboTiempo(Game game) {
 		this.game = game;
 		viewport = new FitViewport(GuazoServer.V_WIDTH, GuazoServer.V_HEIGHT, new OrthographicCamera());
 		stage = new Stage(viewport, ((GuazoServer) game).batch);
-		
+
 		Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
-		
+
 		Table table = new Table();
 		table.center();
 		table.setFillParent(true);
-		
+
 		Label finJuegoLabel = new Label("FIN DEL JUEGO", font);
 		Label algunoPerdio = new Label("Se ha acabado el tiempo", font);
-		Label juegarDeNuevoLabel = new Label("Haz click en cualquier parte de la pantalla para iniciar de vuelta", font);
-		
+		Label juegarDeNuevoLabel = new Label("Haz click en cualquier parte de la pantalla para iniciar de vuelta",
+				font);
+
 		table.add(finJuegoLabel).expandX();
 		table.row();
 		table.add(algunoPerdio).expandX();
 		table.row();
 		table.add(juegarDeNuevoLabel).expandX().padTop(10f);
-		
+
 		stage.addActor(table);
 	}
 
@@ -49,11 +50,11 @@ public class AcaboTiempo implements Screen{
 
 	@Override
 	public void render(float delta) {
-		if(Gdx.input.justTouched()) {
+		if (Gdx.input.justTouched()) {
 			game.setScreen(new PantallaJuego((GuazoServer) game));
 			dispose();
 		}
-			
+
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.draw();
@@ -68,7 +69,7 @@ public class AcaboTiempo implements Screen{
 	}
 
 	@Override
-	public void resume() {		
+	public void resume() {
 	}
 
 	@Override

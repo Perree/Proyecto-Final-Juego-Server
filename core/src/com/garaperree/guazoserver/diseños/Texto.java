@@ -14,7 +14,7 @@ public class Texto {
 	private float x = 0, y = 0;
 	private String texto = "";
 	GlyphLayout layout;
-	
+
 	public Texto(String rutaFuente, int dimension, Color color, boolean sombra) {
 		ganerarTexto(rutaFuente, dimension, color, sombra);
 	}
@@ -38,7 +38,7 @@ public class Texto {
 	public void dibujar() {
 		fuente.draw(Render.sb, texto, x, y);
 	}
-	
+
 	public void setColor(Color color) {
 		fuente.setColor(color);
 	}
@@ -74,19 +74,18 @@ public class Texto {
 	}
 
 	public float getAncho() {
-		return  layout.width;
+		return layout.width;
 	}
-	
+
 	public float getAlto() {
-		return  layout.height;
+		return layout.height;
 	}
-	
+
 	public Vector2 getDimension() {
-		return new Vector2(layout.width,layout.height);
+		return new Vector2(layout.width, layout.height);
 	}
-	
+
 	public Vector2 getPosicion() {
-		return new Vector2(x,y);
+		return new Vector2(x, y);
 	}
 }
-
