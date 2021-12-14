@@ -6,10 +6,10 @@ import com.garaperree.guazoserver.pantallas.PantallaJuego;
 
 public class GuazoServer extends Game {
 
-	// Dimensiones pixeles por metros
+	// Dimensiones pixeles por metros, Box2d usa metros, kilogramos y segundos
 	public static final int V_WIDTH = 1024;
 	public static final int V_HEIGHT = 768;
-	public static final float PPM = 100;
+	public static final float PPM = 100; // pixeles por metros
 
 	// Box2D Collision Bits
 	public static final short NOTHING_BIT = 0;

@@ -121,5 +121,9 @@ public class HiloServidor extends Thread {
 			enviarMensaje(msg, clientes[i].getIp(), clientes[i].getPuerto());
 		}
 	}
+	
+	public void cerrarHilo() {
+		fin = true;
+	}
 
 }
