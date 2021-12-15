@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFont
 import com.badlogic.gdx.math.Vector2;
 import com.garaperree.guazoserver.utiles.Render;
 
+// Utilizamos esta clase como una pantalla de carga al servidor del juego
 public class Texto {
 	BitmapFont fuente;
 	private float x = 0, y = 0;

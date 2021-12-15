@@ -5,6 +5,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.util.ArrayList;
 
 import com.garaperree.guazoserver.utiles.Utiles;
 
@@ -14,7 +15,8 @@ public class HiloServidor extends Thread {
 	private boolean fin = false;
 	private int cantClientes = 0;
 	private int maxClientes = 2;
-	private DireccionRed[] clientes = new DireccionRed[maxClientes];
+	private ArrayList<DireccionRed> clientes = new ArrayList<DireccionRed>();
+//	private DireccionRed[] clientes = new DireccionRed[maxClientes];
 
 	public HiloServidor() {
 		try {
@@ -48,7 +50,8 @@ public class HiloServidor extends Thread {
 			System.out.println("Llega msg conexion cliente " + cantClientes);
 
 			if (cantClientes < 2) {
-				this.clientes[cantClientes] = new DireccionRed(dp.getAddress(), dp.getPort());
+				this.clientes.add( new DireccionRed(dp.getAddress(), dp.getPort()));
+//				this.clientes[cantClientes] = new DireccionRed(dp.getAddress(), dp.getPort());
 				enviarMensaje("ConexionAceptada!" + (cantClientes + 1), dp.getAddress(), dp.getPort());
 				cantClientes++;
 
@@ -56,6 +59,16 @@ public class HiloServidor extends Thread {
 					Utiles.listener.empezar();
 					enviarATodos("Empieza");
 				}
+			}
+		}
+		
+		if(msg.equals("desconectar")) {
+			int nroPlayer = obtenerNroPlayer(dp.getAddress(), dp.getPort());
+			nroPlayer--;
+			clientes.remove(nroPlayer);
+			cantClientes--;
+			if(cantClientes==0) {
+				Utiles.listener.reiniciar();
 			}
 		}
 
@@ -94,11 +107,11 @@ public class HiloServidor extends Thread {
 		boolean fin = false;
 		int i = 0;
 		do {
-			if (address.equals(this.clientes[i].getIp()) && (port == this.clientes[i].getPuerto())) {
+			if (address.equals(this.clientes.get(i).getIp()) && (port == this.clientes.get(i).getPuerto())) {
 				fin = true;
 			}
 			i++;
-			if (i == this.clientes.length) {
+			if (i == this.clientes.size()) {
 				fin = true;
 			}
 		} while (!fin);
@@ -117,8 +130,8 @@ public class HiloServidor extends Thread {
 
 	// Envia mensaje a todos los clientes
 	public void enviarATodos(String msg) {
-		for (int i = 0; i < clientes.length; i++) {
-			enviarMensaje(msg, clientes[i].getIp(), clientes[i].getPuerto());
+		for (int i = 0; i < clientes.size(); i++) {
+			enviarMensaje(msg, clientes.get(i).getIp(), clientes.get(i).getPuerto());
 		}
 	}
 	

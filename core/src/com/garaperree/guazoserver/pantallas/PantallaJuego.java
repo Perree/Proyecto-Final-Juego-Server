@@ -159,18 +159,6 @@ public class PantallaJuego implements Screen, JuegoEventListener {
 				jugador2.right();
 			}
 		}
-
-		// controlar a nuestro jugador mediante impulsos
-//		if(jugador1.currentState != Fumiko.State.DEAD) {
-//			if(Gdx.input.isKeyJustPressed(Input.Keys.UP))
-//				jugador1.jump();
-//			
-//			if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) && jugador1.b2body.getLinearVelocity().x <=2)
-//				jugador1.b2body.applyLinearImpulse(new Vector2(0.1f, 0),jugador1.b2body.getWorldCenter(), true);
-//			
-//			if(Gdx.input.isKeyPressed(Input.Keys.LEFT) && jugador1.b2body.getLinearVelocity().x >=-2)
-//				jugador1.b2body.applyLinearImpulse(new Vector2(-0.1f, 0),jugador1.b2body.getWorldCenter(), true);
-//		}
 	}
 
 	public void update(float dt) {
@@ -307,46 +295,8 @@ public class PantallaJuego implements Screen, JuegoEventListener {
 			if (hud.getWorldTimer() == 0) {
 				servidor.enviarATodos("seAcaboTiempoBrother");
 			}
-
-			// Llego a la meta GANO!
-//			if (jugador1.isPuedeSalir()) {
-//				ganadorJugador();
-//			}
-
-			// Llego a la meta GANO!
-//			if (jugador2.isPuedeSalir()) {
-//				ganadorJugador();
-//			}
-
-			// El personaje perdio
-//			if (muertoJugador()) {				
-//				game.setScreen(new PerdioJuego(game, servidor));
-//				dispose();
-//			}
 		}
 	}
-
-	// Se termino el tiempo
-	public void acaboTiempo() {
-		game.setScreen(new AcaboTiempo(game));
-		dispose();
-	}
-
-	// Un jugador ha ganado
-	public void ganadorJugador() {
-		game.setScreen(new FinDelJuego(game));
-		dispose();
-	}
-
-	// Se corrobora que si el estado del jugador esta muerto
-//	public boolean muertoJugador() {
-//		if (jugador1.currentState == Fumiko.State.DEAD) {
-//			return true;
-//		} else if (jugador2.currentState == Fumiko.State.DEAD) {
-//			return true;
-//		}
-//		return false;
-//	}
 
 	@Override
 	public void resize(int width, int height) {
@@ -453,5 +403,11 @@ public class PantallaJuego implements Screen, JuegoEventListener {
 				jugador2.mueveDerecha = false;
 			}
 		}
+	}
+
+	@Override
+	public void reiniciar() {
+		game.setScreen(new PantallaJuego((GuazoServer) game));
+		dispose();
 	}
 }

@@ -10,4 +10,6 @@ public interface JuegoEventListener extends EventListener {
 
 	public void soltoTecla(int nroPlayer, String tecla);
 
+	public void reiniciar();
+
 }
