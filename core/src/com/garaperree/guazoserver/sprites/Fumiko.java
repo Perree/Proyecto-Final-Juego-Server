@@ -48,8 +48,6 @@ public class Fumiko extends Sprite {
 		this.nroJugador = nroJugador;
 		this.servidor = servidor;
 		this.world = screen.getWorld();
-//		currentState = State.STANDING;
-//		previousState = State.STANDING;
 		stateTimer = 0;
 		runningRight = true;
 
@@ -79,7 +77,6 @@ public class Fumiko extends Sprite {
 
 		// Seteamos los valores de posicion para fumiko
 		setBounds(0, 0, 52 / GuazoServer.PPM, 52 / GuazoServer.PPM);
-//		setRegion(fumikoStand);
 	}
 
 	// Con este metodo sabemos que esta haciendo el jugador (correr, saltar, etc)

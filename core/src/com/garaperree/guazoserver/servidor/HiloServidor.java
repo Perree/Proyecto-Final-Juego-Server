@@ -14,7 +14,7 @@ public class HiloServidor extends Thread {
 	private DatagramSocket conexion;
 	private boolean fin = false;
 	private int cantClientes = 0;
-	private int maxClientes = 2;
+//	private int maxClientes = 2;
 	private ArrayList<DireccionRed> clientes = new ArrayList<DireccionRed>();
 //	private DireccionRed[] clientes = new DireccionRed[maxClientes];
 
@@ -133,10 +133,6 @@ public class HiloServidor extends Thread {
 		for (int i = 0; i < clientes.size(); i++) {
 			enviarMensaje(msg, clientes.get(i).getIp(), clientes.get(i).getPuerto());
 		}
-	}
-	
-	public void cerrarHilo() {
-		fin = true;
 	}
 
 }

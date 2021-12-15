@@ -21,6 +21,7 @@ public class FinDelJuego implements Screen {
 
 	public FinDelJuego(Game game) {
 		this.game = game;
+
 		viewport = new FitViewport(GuazoServer.V_WIDTH, GuazoServer.V_HEIGHT, new OrthographicCamera());
 		stage = new Stage(viewport, ((GuazoServer) game).batch);
 
@@ -30,10 +31,9 @@ public class FinDelJuego implements Screen {
 		table.center();
 		table.setFillParent(true);
 
-		Label finJuegoLabel = new Label("FIN DEL JUEGO", font);
-		Label quienGano = new Label("Has ganado!", font);
-		Label juegarDeNuevoLabel = new Label("Haz click en cualquier parte de la pantalla para iniciar de vuelta",
-				font);
+		Label finJuegoLabel = new Label("REINICIANDO SERVIDOR", font);
+		Label quienGano = new Label(".......", font);
+		Label juegarDeNuevoLabel = new Label("Aguarde unos segundos", font);
 
 		table.add(finJuegoLabel).expandX();
 		table.row();
@@ -50,10 +50,8 @@ public class FinDelJuego implements Screen {
 
 	@Override
 	public void render(float delta) {
-//		if(Gdx.input.justTouched()) {
-//			game.setScreen(new PantallaJuego((GuazoServer) game));
-//			dispose();
-//		}
+		game.setScreen(new PantallaJuego((GuazoServer) game));
+		dispose();
 
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
